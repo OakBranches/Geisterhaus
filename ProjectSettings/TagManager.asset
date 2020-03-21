@@ -15,10 +15,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - PlayerProjectiles
+  - EnemyProjectiles
+  - Enemies
+  - Player
   - 
   - 
   - 
