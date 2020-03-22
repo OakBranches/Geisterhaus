@@ -6,13 +6,14 @@ public class Player : MonoBehaviour
 {
     public float moveSpeed = .0625f;
     Vector2 input;
+    Rigidbody2D rb;
     bool fire;
     bool facingRight = true;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -34,7 +35,7 @@ public class Player : MonoBehaviour
             facingRight = !facingRight;
         }
 
-        transform.Translate(velocity);
+        rb.velocity = velocity;
     }
 
     void Flip()

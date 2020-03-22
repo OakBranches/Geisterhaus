@@ -35,10 +35,6 @@ public class Fire : MonoBehaviour
         {
             lastProjectileTimer -= Time.fixedDeltaTime;
         }
-        else
-        {
-            lastProjectileTimer = projectileTimer;
-        }
 
         if (Input.GetButton("Fire1") && projectilePool.Count > 0 && lastProjectileTimer <= 0f)
         {
@@ -47,7 +43,7 @@ public class Fire : MonoBehaviour
             projectile.instance.transform.position = transform.position;
             projectile.rb.velocity =
                 new Vector3(projectileSpeed * transform.localScale.x, 0f, 0f);
-            lastProjectileTimer = lastProjectileTimer;
+            lastProjectileTimer = projectileTimer;
             Debug.Log("Fired!");
         }
     }

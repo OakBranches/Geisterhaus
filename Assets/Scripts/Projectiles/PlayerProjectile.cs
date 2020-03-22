@@ -29,7 +29,8 @@ public class PlayerProjectile : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.transform.tag == "Walls")
+        if (other.transform.tag == "Walls" || 
+            other.gameObject.layer == LayerMask.NameToLayer("Enemies"))
         {
             gameObject.SetActive(false);
             Projectiles.Projectile projectile = new Projectiles.Projectile(rb, gameObject);
