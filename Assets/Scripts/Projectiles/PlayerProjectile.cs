@@ -6,6 +6,7 @@ public class PlayerProjectile : MonoBehaviour
 {
     public static Fire fire;
     public static Collider2D playerCollider;
+	public float dano;
     Collider2D projectileCollider;
     Rigidbody2D rb;
 
@@ -35,6 +36,10 @@ public class PlayerProjectile : MonoBehaviour
             gameObject.SetActive(false);
             Projectiles.Projectile projectile = new Projectiles.Projectile(rb, gameObject);
             fire.projectilePool.Enqueue(projectile);
+			if(other.gameObject.layer == LayerMask.NameToLayer("Enemies")){
+				if(other.gameObject.GetComponent<LifeManager>().subLife(dano))
+					Destroy(other.gameObject);			
+			}
         }   
     }
 }

@@ -1524,6 +1524,7 @@ GameObject:
   - component: {fileID: 1026896027}
   - component: {fileID: 1026896030}
   - component: {fileID: 1026896031}
+  - component: {fileID: 1026896032}
   m_Layer: 10
   m_Name: Priest
   m_TagString: Untagged
@@ -1627,6 +1628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90517f9b8c25c548b8d84aeef6700b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lifeManager: {fileID: 0}
   projectile: {fileID: 2482811248068315332, guid: 70738ed9358fc2841b22000a79c32f4c,
     type: 3}
   attackTimer: 2.5
@@ -1660,6 +1662,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.75, y: 1.25}
   m_EdgeRadius: 0
+--- !u!114 &1026896032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1026896026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ed3501aae9697637992441e17349ec8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vida: 10
 --- !u!1 &1031455963 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2413950573502847834, guid: 8f51b634d0979eb4181ffda79a7b889c,
@@ -3333,6 +3348,11 @@ PrefabInstance:
         type: 3}
       propertyPath: moveSpeed
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7339359222620059842, guid: 8f51b634d0979eb4181ffda79a7b889c,
+        type: 3}
+      propertyPath: life
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f51b634d0979eb4181ffda79a7b889c, type: 3}

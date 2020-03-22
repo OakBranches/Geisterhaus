@@ -7,6 +7,7 @@ public class PriestProjectile : MonoBehaviour
     public static Priest priest;
     Collider2D projectileCollider;
     Rigidbody2D rb;
+	public float dano;
 
     void Start()
     {   
@@ -31,7 +32,9 @@ public class PriestProjectile : MonoBehaviour
 
             if (other.transform.tag == "Player")
             {
-                // Player dies
+		
+				if( other.gameObject.GetComponent<Player>().lifeManager.subLife(dano))
+					Destroy(other.gameObject);
             }
         }
     }
