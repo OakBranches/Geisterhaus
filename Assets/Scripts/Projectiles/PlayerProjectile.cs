@@ -36,10 +36,13 @@ public class PlayerProjectile : MonoBehaviour
             gameObject.SetActive(false);
             Projectiles.Projectile projectile = new Projectiles.Projectile(rb, gameObject);
             fire.projectilePool.Enqueue(projectile);
-			if(other.gameObject.layer == LayerMask.NameToLayer("Enemies")){
-				if(other.gameObject.GetComponent<LifeManager>().subLife(dano))
-					Destroy(other.gameObject);			
-			}
+			if (other.gameObject.layer == LayerMask.NameToLayer("Enemies"))
+            {
+				if (other.gameObject.GetComponent<LifeManager>().subLife(dano))
+				{
+                    Destroy(other.gameObject);			
+                }
+            }
         }   
     }
 }

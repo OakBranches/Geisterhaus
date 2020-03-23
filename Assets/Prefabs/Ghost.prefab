@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeManager: {fileID: 0}
-  moveSpeed: 0.125
+  moveSpeed: 6
 --- !u!114 &-2648279904275140829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,4 +179,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ed3501aae9697637992441e17349ec8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vida: 10
+  vida: 5
