@@ -9,7 +9,7 @@ public class Priest : MonoBehaviour
     Animator animator;
     BoxCollider2D boxCollider;
     Vector3 shootPosition;
-
+	public LifeManager lifeManager;
     public GameObject projectile;
     public static Queue<Projectiles.Projectile> projectilePool =
         new Queue<Projectiles.Projectile>();
@@ -25,7 +25,7 @@ public class Priest : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
-        
+        lifeManager = GetComponent<LifeManager>();
         for (int i = 0; i < projectilesPerAttack * maxAttacks; i++)
         {
             GameObject projectileInstance = Instantiate(projectile);

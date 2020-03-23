@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Walls
   - PlayerProjectile
+  - UIContainer
   layers:
   - Default
   - TransparentFX

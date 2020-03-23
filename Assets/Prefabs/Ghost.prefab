@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4344079278638312251}
   - component: {fileID: 6474575401508423406}
   - component: {fileID: 7339359222620059842}
+  - component: {fileID: -2648279904275140829}
   m_Layer: 11
   m_Name: Ghost
   m_TagString: Player
@@ -164,4 +165,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d286847122e6284f88bbb864415b870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.125
+  lifeManager: {fileID: 0}
+  moveSpeed: 6
+--- !u!114 &-2648279904275140829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2413950573502847834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ed3501aae9697637992441e17349ec8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vida: 5

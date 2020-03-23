@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+	public LifeManager lifeManager;
     public float moveSpeed = .0625f;
     Vector2 input;
     Rigidbody2D rb;
@@ -12,7 +13,8 @@ public class Player : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
+    {	
+		lifeManager = GetComponent<LifeManager>();
         rb = GetComponent<Rigidbody2D>();
     }
 

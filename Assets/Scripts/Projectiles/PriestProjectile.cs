@@ -5,13 +5,20 @@ using UnityEngine;
 public class PriestProjectile : MonoBehaviour
 {
     public static Priest priest;
+    public static Player player;
     Collider2D projectileCollider;
     Rigidbody2D rb;
+	public float dano;
 
     void Start()
     {   
         projectileCollider = GetComponent<Collider2D>();
 
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        }
+        
         if (priest == null)
         {
             priest = GameObject.FindGameObjectWithTag("Player")
@@ -31,7 +38,11 @@ public class PriestProjectile : MonoBehaviour
 
             if (other.transform.tag == "Player")
             {
-                // Player dies
+				if(player.lifeManager.subLife(dano))
+                {
+				    // Fim de jogo
+                    GameController.GameOver();
+                }
             }
         }
     }
