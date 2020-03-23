@@ -5,6 +5,7 @@ using UnityEngine;
 public class PriestProjectile : MonoBehaviour
 {
     public static Priest priest;
+    public static Player player;
     Collider2D projectileCollider;
     Rigidbody2D rb;
 	public float dano;
@@ -13,6 +14,11 @@ public class PriestProjectile : MonoBehaviour
     {   
         projectileCollider = GetComponent<Collider2D>();
 
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        }
+        
         if (priest == null)
         {
             priest = GameObject.FindGameObjectWithTag("Player")
@@ -32,9 +38,11 @@ public class PriestProjectile : MonoBehaviour
 
             if (other.transform.tag == "Player")
             {
-		
-				if( other.gameObject.GetComponent<Player>().lifeManager.subLife(dano))
-					Destroy(other.gameObject);
+				if(player.lifeManager.subLife(dano))
+                {
+				    // Fim de jogo
+                    GameController.GameOver();
+                }
             }
         }
     }
