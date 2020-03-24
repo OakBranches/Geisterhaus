@@ -167,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeManager: {fileID: 0}
   moveSpeed: 6
+  cameraSpeed: 100
 --- !u!114 &-2648279904275140829
 MonoBehaviour:
   m_ObjectHideFlags: 0

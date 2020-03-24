@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     bool fire;
     bool facingRight = true;
     Camera mainCamera;
+    [SerializeField] float cameraSpeed = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,8 @@ public class Player : MonoBehaviour
 		lifeManager = GetComponent<LifeManager>();
         rb = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
+
+        
     }
 
     // Update is called once per frame
@@ -51,44 +54,148 @@ public class Player : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collider)
     {
-        UpstairCorridorLeftDoor(collider);
-        UpstairCorridorRightDoor(collider);
+        UpstairsCorridorLeftDoor(collider);
+        UpstairsCorridorRightDoor(collider);
         ChildBedroomRightDoor(collider);
         ParentBedroomLeftDoor(collider);
+
+        UpstairsCorridorLeftElevator(collider);
+        DownstairsCorridorLeftElevator(collider);
+        UpstairsCorridorRightElevator(collider);
+        DownstairsCorridorRightElevator(collider);
+
+        DownstairsCorridorLeftDoor(collider);
+        DownstairsCorridorRightDoor(collider);
+        LivingRoomRightDoor(collider);
+        KitchenLeftDoor(collider);
     }
 
-    private void UpstairCorridorLeftDoor(Collider2D collider)
+    private void UpstairsCorridorLeftDoor(Collider2D collider)
     {
-        if (collider.name == "Upstairs Corridor Left Door" && Input.GetKey(KeyCode.E))
+        if (collider.name == "Upstairs Corridor Left Door" && Input.GetKeyDown(KeyCode.E))
         {
-            gameObject.transform.position = new Vector2(-50f, -2f);
-            mainCamera.transform.position = new Vector3(-50f, 0f, -10f);
+            gameObject.transform.position = new Vector2(-41.5f, -4.5f);
+            StartCoroutine(SmoothCameraPosition(new Vector3(-50f, 0f, -10f)));
         }
     }
 
-    private void UpstairCorridorRightDoor(Collider2D collider)
+    private void UpstairsCorridorRightDoor(Collider2D collider)
     {
-        if (collider.name == "Upstairs Corridor Right Door" && Input.GetKey(KeyCode.E))
+        if (collider.name == "Upstairs Corridor Right Door" && Input.GetKeyDown(KeyCode.E))
         {
-            gameObject.transform.position = new Vector2(50f, -2f);
-            mainCamera.transform.position = new Vector3(50f, 0f, -10f);
+            gameObject.transform.position = new Vector2(41.5f, -4.5f);
+            StartCoroutine(SmoothCameraPosition(new Vector3(50f, 0f, -10f)));
         }
     }
 
     private void ChildBedroomRightDoor(Collider2D collider)
     {
-        if (collider.name == "Child's Bedroom Right Door" && Input.GetKey(KeyCode.E))
+        if (collider.name == "Child's Bedroom Right Door" && Input.GetKeyDown(KeyCode.E))
         {
-            gameObject.transform.position = new Vector2(0f, -2f);
-            mainCamera.transform.position = new Vector3(0f, 0f, -10f);
+            gameObject.transform.position = new Vector2(-8.5f, -4.5f);
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f)));
         }
     }
+
     private void ParentBedroomLeftDoor(Collider2D collider)
     {
-        if (collider.name == "Parent's Bedroom Left Door" && Input.GetKey(KeyCode.E))
+        if (collider.name == "Parent's Bedroom Left Door" && Input.GetKeyDown(KeyCode.E))
         {
-            gameObject.transform.position = new Vector2(0f, -2f);
-            mainCamera.transform.position = new Vector3(0f, 0f, -10f);
+            gameObject.transform.position = new Vector2(8.5f, -4.5f);
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f)));
         }
+    }
+
+    private void UpstairsCorridorLeftElevator(Collider2D collider)
+    {
+        if (collider.name == "Upstairs Corridor Left Elevator" && Input.GetKeyDown(KeyCode.E))
+        {
+            gameObject.transform.position = new Vector2(-11f, -33.5f);
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, -29f, -10f)));
+        }
+    }
+
+    private void DownstairsCorridorLeftElevator(Collider2D collider)
+    {
+        if (collider.name == "Downstairs Corridor Left Elevator" && Input.GetKeyDown(KeyCode.E))
+        {
+            gameObject.transform.position = new Vector2(-11f, -4.5f);
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f)));
+        }
+    }
+
+    private void UpstairsCorridorRightElevator(Collider2D collider)
+    {
+        if (collider.name == "Upstairs Corridor Right Elevator" && Input.GetKeyDown(KeyCode.E))
+        {
+            gameObject.transform.position = new Vector2(11f, -33.5f);
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, -29f, -10f)));
+        }
+    }
+
+    private void DownstairsCorridorRightElevator(Collider2D collider)
+    {
+        if (collider.name == "Downstairs Corridor Right Elevator" && Input.GetKeyDown(KeyCode.E))
+        {
+            gameObject.transform.position = new Vector2(11f, -4.5f);
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f)));
+        }
+    }
+
+    private void DownstairsCorridorLeftDoor(Collider2D collider)
+    {
+        if (collider.name == "Downstairs Corridor Left Door" && Input.GetKeyDown(KeyCode.E))
+        {
+            gameObject.transform.position = new Vector2(-41.5f, -33.5f);
+            StartCoroutine(SmoothCameraPosition(new Vector3(-50f, -29f, -10f)));
+        }
+    }
+
+    private void DownstairsCorridorRightDoor(Collider2D collider)
+    {
+        if (collider.name == "Downstairs Corridor Right Door" && Input.GetKeyDown(KeyCode.E))
+        {
+            gameObject.transform.position = new Vector2(41.5f, -33.5f);
+            StartCoroutine(SmoothCameraPosition(new Vector3(50f, -29f, -10f)));
+        }
+    }
+
+    private void LivingRoomRightDoor(Collider2D collider)
+    {
+        if (collider.name == "Living Room Right Door" && Input.GetKeyDown(KeyCode.E))
+        {
+            gameObject.transform.position = new Vector2(-8.5f, -33.5f);
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, -29f, -10f)));
+        }
+    }
+
+    private void KitchenLeftDoor(Collider2D collider)
+    {
+        if (collider.name == "Kitchen Left Door" && Input.GetKeyDown(KeyCode.E))
+        {
+            gameObject.transform.position = new Vector2(8.5f, -33.5f);
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, -29f, -10f)));
+        }
+    }
+
+    IEnumerator SmoothCameraPosition(Vector3 toWhere)
+    {
+        Time.timeScale = 0f;
+        Vector3 startPosition = mainCamera.transform.position;
+
+        float distance = Vector3.Distance(mainCamera.transform.position, toWhere);
+        float startTime = Time.unscaledTime;
+        float distanceTraveledPercentage = 0f;
+
+        while (distanceTraveledPercentage < 1)
+        {
+            float distanceMoved = (Time.unscaledTime - startTime) * cameraSpeed;
+            distanceTraveledPercentage = distanceMoved / distance;
+
+            mainCamera.transform.position = Vector3.Lerp(startPosition, toWhere,
+                distanceTraveledPercentage);
+            yield return null;
+        }
+        Time.timeScale = 1f;
     }
 }
