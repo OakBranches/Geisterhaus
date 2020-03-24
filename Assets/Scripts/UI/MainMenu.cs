@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -62,6 +63,8 @@ public class MainMenu : MonoBehaviour
         {
             ResetUI(currentScreen);
         }
+
+        DetectEnterInput();
     }
 
     void SetArrowPosition()
@@ -131,6 +134,34 @@ public class MainMenu : MonoBehaviour
         {
             x = _x;
             y = _y;
+        }
+    }
+
+    private void DetectEnterInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            MenuOptions(index);
+        }
+    }
+    private void MenuOptions(int index)
+    {
+        switch (index)
+        {
+            case 1:
+                SceneManager.LoadScene("SampleScene");
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                Debug.Log("Exit");
+                Application.Quit();
+                break;
+            default:
+                Debug.LogError("Please check MainMenu.cs for missing case in MenuOptions");
+                break;
         }
     }
 }
