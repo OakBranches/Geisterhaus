@@ -78,7 +78,7 @@ public class NPControl : MonoBehaviour
         }
     }
     void move(){
-
+        npcInit();
         roomDriver.canEnter=false;
         if(lista.Count!=0){
             float step =  speed * Time.deltaTime; // calculate distance to move
