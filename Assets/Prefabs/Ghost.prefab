@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6474575401508423406}
   - component: {fileID: 7339359222620059842}
   - component: {fileID: -2648279904275140829}
+  - component: {fileID: 559508372846527303}
   - component: {fileID: 6927736634964388309}
   m_Layer: 11
   m_Name: Ghost
@@ -169,7 +170,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeManager: {fileID: 0}
   moveSpeed: 6
-  cameraSpeed: 100
 --- !u!114 &-2648279904275140829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,6 +183,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vida: 5
+--- !u!114 &559508372846527303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2413950573502847834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b938b7b00f4aa8e0835ca9aaab3dbe1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canEnter: 0
+  cameraSpeed: 100
 --- !u!114 &6927736634964388309
 MonoBehaviour:
   m_ObjectHideFlags: 0
