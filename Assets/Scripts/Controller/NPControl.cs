@@ -11,6 +11,7 @@ public class NPControl : MonoBehaviour
     private int[] ghost = new int[2]; 
     string currentRoom;
     private int[] oldghost = new int[2];
+    int andar,sala;
     private int[] npc = new int[2];
     public float  speed;
     RoomDriver roomDriver;
@@ -22,7 +23,7 @@ public class NPControl : MonoBehaviour
         roomsInit();
         npcInit();
         roomDriver = GetComponent<RoomDriver>();
-        print(npc[0]+" -  "+npc[1]);
+        //print(npc[0]+" -  "+npc[1]);
     }
     void MOVE(int a,int b){
         lista = new List<Vector2>();
@@ -41,13 +42,15 @@ public class NPControl : MonoBehaviour
                 //go to corredor
                 if(virtualNPC[1]==1){
                     //no corredor
-                    lista.Add(new Vector2((1>0?1:-1)*11f,piso));
+                    int p=Random.Range(0,1);
+                    lista.Add(new Vector2((p>0.5f?1:-1)*11f,piso));
+                    print(p);
                     virtualNPC[0]=a;
                      print("1 " +virtualNPC[0] +"  to em  " +virtualNPC[1] );
                 }else{
                     //qqr sala adj.
-                    lista.Add(new Vector2((virtualNPC[1]>b?1f:-1f)*41.5f,piso));
-                    virtualNPC[0]=1;
+                    lista.Add(new Vector2((virtualNPC[1]>1?1f:-1f)*41.5f,piso));
+                    virtualNPC[1]=1;
 
                      print("2 " +virtualNPC[0] +"  to em  " +virtualNPC[1] );
                 }
@@ -56,7 +59,7 @@ public class NPControl : MonoBehaviour
                 if(b==1){
                     //pegar a porta para ir para o corredor
                     lista.Add(new Vector2((virtualNPC[1]>b?1:-1)*41.5f,piso));
-                    virtualNPC[0]=1;
+                    virtualNPC[1]=1;
                      print("3 "  +virtualNPC[0] +"  to em  " +virtualNPC[1] );
                      
                 }else{
@@ -77,18 +80,32 @@ public class NPControl : MonoBehaviour
 
         }
     }
+
+    bool entrando = false;
     void move(){
         npcInit();
         roomDriver.canEnter=false;
         if(lista.Count!=0){
+            
+            print("toem "+transform.position+"quero ir para"+ lista[0]+"ent: "+entrando);
+            if(entrando)
+                if(new Vector2(transform.position.x,transform.position.y)!= lista[0]){
+                        lista.Remove(lista[0]);
+                        entrando=false;
+                        roomDriver.canEnter=false;
+                        //print("esta igual\n\n\n\n");
+                        return;
+              
             float step =  speed * Time.deltaTime; // calculate distance to move
             transform.position = Vector3.MoveTowards(transform.position, lista[0], step);
-            print("toem "+transform.position+"quero ir para"+ lista[0]);
             if(new Vector2(transform.position.x,transform.position.y)== lista[0]){
                 roomDriver.canEnter=true;
-                lista.Remove(lista[0]);
-            
-            }else{
+                //roomDriver.OnTriggerStay2D(GetComponent<Collider2D>());
+                //print("----------------------------------------------------");
+                entrando=true;
+                //print("---------"+transform.position+"quero ir para"+ lista[0]+"-----------------------");
+
+                }else{
                 roomDriver.canEnter=false;
             }
         }
@@ -140,10 +157,30 @@ public class NPControl : MonoBehaviour
         npc[0]= (int)this.transform.position.y>(-10)?1:0;
         npc[1]=(int)this.transform.position.x<-28?0:((int)this.transform.position.x>28?2:1);}
     // Update is called once per frame
+    //booleana de estar no mesmo quarto que o fantasma
+    bool run = false;
+    //contador de reação
+    int see = 0;
+    
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P))
-            MOVE(1,0);
+        
+        
+        if(npc[0]==ghost[0] && npc[1]==ghost[1] && run==false && see>50){
+            do{
+                andar = ((int)Random.Range(0,3))%2;
+                sala = ((int)Random.Range(0,4))%3;
+                run =true;
+                MOVE(andar,sala);
+            }while(andar==ghost[0]&&sala==ghost[1]);
+        }else if(npc[0]==ghost[0] && npc[1]==ghost[1] && run==false )
+        {
+            
+        see++;
+        }else if(run==true && !( npc[0]==ghost[0] && npc[1]==ghost[1]) ){
+            run=false;
+            see=0;
+        }
         currentRoom = minicamera.getCurrentRoom();
         ghostInit();
         oldghost[0] = ghost[0];

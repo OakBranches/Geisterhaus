@@ -22,13 +22,13 @@ public class RoomDriver : MonoBehaviour
     void Update()
     {
 		if(gameObject.tag=="Player"){
-        if(Input.GetKeyDown(KeyCode.E))
-			canEnter=true;
-		else
-			canEnter=false;
+            if(Input.GetKeyDown(KeyCode.E))
+                canEnter=true;
+            else
+                canEnter=false;
 		}
     }
-    private void OnTriggerStay2D(Collider2D collider)
+    public void OnTriggerStay2D(Collider2D collider)
     {
         UpstairsCorridorLeftDoor(collider);
         UpstairsCorridorRightDoor(collider);
@@ -44,6 +44,7 @@ public class RoomDriver : MonoBehaviour
         DownstairsCorridorRightDoor(collider);
         LivingRoomRightDoor(collider);
         KitchenLeftDoor(collider);
+  
     }
 
     private void UpstairsCorridorLeftDoor(Collider2D collider)
@@ -168,5 +169,6 @@ public class RoomDriver : MonoBehaviour
 	}
 
         gameObject.transform.position = playerPosition; 
+        canEnter = false;
     }
 }
