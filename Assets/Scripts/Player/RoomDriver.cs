@@ -51,7 +51,7 @@ public class RoomDriver : MonoBehaviour
     {
         if (collider.name == "Upstairs Corridor Left Door" && canEnter)
         {
-            StartCoroutine(SmoothCameraPosition(new Vector3(-50f, 0f, -10f), new Vector2(-41.5f, -4.5f)));
+            StartCoroutine(SmoothCameraPosition(new Vector3(-50f, 0f, -10f), new Vector2(-41.5f, -3.98f)));
         }
     }
 
@@ -59,7 +59,7 @@ public class RoomDriver : MonoBehaviour
     {
         if (collider.name == "Upstairs Corridor Right Door" && canEnter)
         {
-            StartCoroutine(SmoothCameraPosition(new Vector3(50f, 0f, -10f),new Vector2(41.5f, -4.5f)));
+            StartCoroutine(SmoothCameraPosition(new Vector3(50f, 0f, -10f),new Vector2(41.5f, -3.98f)));
         }
     }
 
@@ -67,7 +67,7 @@ public class RoomDriver : MonoBehaviour
     {
         if (collider.name == "Child's Bedroom Right Door" && canEnter)
         {         
-            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f),new Vector2(-8.5f, -4.5f)));
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f),new Vector2(-8.5f, -3.98f)));
         }
     }
 
@@ -75,7 +75,7 @@ public class RoomDriver : MonoBehaviour
     {
         if (collider.name == "Parent's Bedroom Left Door" && canEnter)
         {
-            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f),new Vector2(8.5f, -4.5f)));
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f),new Vector2(8.5f, -3.98f)));
         }
     }
 
@@ -91,7 +91,7 @@ public class RoomDriver : MonoBehaviour
     {
         if (collider.name == "Downstairs Corridor Left Elevator" && canEnter)
         {
-            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f), new Vector2(-11f, -4.5f)));
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f), new Vector2(-11f, -3.98f)));
         }
     }
 
@@ -107,7 +107,7 @@ public class RoomDriver : MonoBehaviour
     {
         if (collider.name == "Downstairs Corridor Right Elevator" && canEnter)
         {
-            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f),new Vector2(11f, -4.5f)));
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f),new Vector2(11f, -3.98f)));
         }
     }
 
