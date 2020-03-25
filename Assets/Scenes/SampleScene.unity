@@ -5448,14 +5448,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcb6210b80e3b8f51a334910e8550259, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  luzes:
-  - {fileID: 720278236}
-  - {fileID: 1150397734}
-  - {fileID: 2008221920}
-  - {fileID: 5281233}
-  - {fileID: 610315160}
-  - {fileID: 983668437}
-  speed: 10
+  NPC_LayerN: 12
+  Enemy_LayerN: 10
+  Kitchen: {fileID: 1150397734}
+  Upstair: {fileID: 610315160}
+  Downstair: {fileID: 720278236}
+  Child: {fileID: 5281233}
+  Living: {fileID: 2008221920}
+  Parent: {fileID: 983668437}
+  EnemyType: 
+  speed: 5
 --- !u!114 &510976478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6514,10 +6516,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.47597075}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -6528,7 +6530,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 1.6050825}
   m_EdgeRadius: 0
 --- !u!114 &789473417
 MonoBehaviour:
@@ -6551,7 +6553,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 789473414}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 41.49, y: -3.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 851233403}
@@ -8942,6 +8944,8 @@ GameObject:
   - component: {fileID: 1026896031}
   - component: {fileID: 1026896032}
   - component: {fileID: 1026896033}
+  - component: {fileID: 1026896034}
+  - component: {fileID: 1026896035}
   m_Layer: 10
   m_Name: Priest
   m_TagString: Untagged
@@ -9113,6 +9117,42 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &1026896034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1026896026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcb6210b80e3b8f51a334910e8550259, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NPC_LayerN: 12
+  Enemy_LayerN: 10
+  Kitchen: {fileID: 1150397734}
+  Upstair: {fileID: 610315160}
+  Downstair: {fileID: 720278236}
+  Child: {fileID: 5281233}
+  Living: {fileID: 2008221920}
+  Parent: {fileID: 983668437}
+  EnemyType: 
+  speed: 5
+--- !u!114 &1026896035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1026896026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d1e25441910544e947694bbe81651b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canEnter: 0
+  cameraSpeed: 5
 --- !u!1 &1031455963 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2413950573502847834, guid: 8f51b634d0979eb4181ffda79a7b889c,

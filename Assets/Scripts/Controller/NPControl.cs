@@ -5,9 +5,12 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class NPControl : MonoBehaviour
 {
-    public Light2D[] luzes = new Light2D[6];
+    public int NPC_LayerN,Enemy_LayerN;
+    private Light2D[,] luzes = new Light2D[2,3];
+    public  Light2D Kitchen,Upstair,Downstair,Child,Living,Parent;
     private bool[,] rooms = new bool[2,3]; 
     MiniCameraFrame minicamera;
+    public string EnemyType;
     private int[] ghost = new int[2]; 
     string currentRoom;
     private int[] oldghost = new int[2];
@@ -20,6 +23,7 @@ public class NPControl : MonoBehaviour
     void Start()
     {
         minicamera = FindObjectOfType<MiniCameraFrame>();
+        LightsInit();
         roomsInit();
         npcInit();
         roomDriver = GetComponent<RoomDriver>();
@@ -89,7 +93,8 @@ public class NPControl : MonoBehaviour
             
            float step =  speed * Time.deltaTime; // calculate distance to move
             transform.position = Vector3.MoveTowards(transform.position, lista[0], step);
-            // //print("toem "+transform.position+"quero ir para"+ lista[0]+"ent: "+entrando);
+            if(gameObject.layer==Enemy_LayerN)
+           // print("toem "+transform.position+"quero ir para"+ lista[0]+"ent: "+entrando);
             if(entrando)
                 if(new Vector2(transform.position.x,transform.position.y)!= lista[0]){
                         lista.Remove(lista[0]);
@@ -138,21 +143,27 @@ public class NPControl : MonoBehaviour
     
     }
 
+    void TurnOffLamps(){
+        for(int y=0;y<2;y++)
+            for(int u=0;u<3;u++)
+                if(!(y==0&&u==1)&&rooms[y,u]==true)
+                    luzes[y,u].enabled=false;
+    }
+    void LightsInit(){
+        luzes[0,2]=Kitchen;
+        luzes[0,0]=Living;
+        luzes[0,1]=Downstair;
+        luzes[1,0]=Child;
+        luzes[1,1]=Upstair;
+        luzes[1,2]=Parent;
+    }
     void roomsInit(){
-        for(int i=0;i<6;i++){
-            if(luzes[i].transform.name.Contains("Kitchen"))
-                rooms[0,2]=luzes[i].enabled;
-            if(luzes[i].transform.name.Contains("Living"))
-                rooms[0,0]=luzes[i].enabled;
-            if(luzes[i].transform.name.Contains("Main"))
-                rooms[0,1]=false;
-            if(luzes[i].transform.name.Contains("Child"))
-            rooms[1,0]=luzes[i].enabled;
-            if(luzes[i].transform.name.Contains("Upstair"))
-                rooms[1,1]=luzes[i].enabled;
-            if(luzes[i].transform.name.Contains("Parent"))
-            rooms[1,2]=luzes[i].enabled;
-        }
+        rooms[0,2]=luzes[0,2].enabled;
+        rooms[0,0]=luzes[0,0].enabled;
+        rooms[0,1]=false;
+        rooms[1,0]=luzes[1,0].enabled;
+        rooms[1,1]=luzes[1,1].enabled;
+        rooms[1,2]=luzes[1,2].enabled;
     }
     void npcInit(){        
         npc[0]= (int)this.transform.position.y>(-10)?1:0;
@@ -162,26 +173,74 @@ public class NPControl : MonoBehaviour
     bool run = false;
     //contador de reação
     float see = 0;
-    
-    void Update()
-    {
-        //print("run"+run);
-        //print("same"+(npc[0]==ghost[0] && npc[1]==ghost[1])+"\n G:"+ghost[0]+" "+ghost[1]);
-        //print("\n N:"+npc[0]+" "+npc[1]);
-        //print("Current room"+ currentRoom);
-        print(Time.time-see);
-        if(npc[0]==ghost[0] && npc[1]==ghost[1] && run==false && Time.time - see>1 ){
+    void FoundGhost(){
+        if(gameObject.layer==NPC_LayerN){
             do{
                 andar = ((int)Random.Range(0,10))%2;
                 sala = ((int)Random.Range(0,9))%3;
                 run =true;
                 MOVE(andar,sala);
             }while(andar==ghost[0]&&sala==ghost[1]);
+        }else if (gameObject.layer==Enemy_LayerN){
+            if(AllLamps()){
+                GetComponent<Priest>().SetAttackMode(true);
+                print("aqui !!!");
+            }else{
+                GetComponent<Priest>().SetAttackMode(false);
+                NotGhostPlace();
+            }
+        }
+    }
+    void RunSuccess(){
+        if(gameObject.layer==NPC_LayerN){
+           run=false;
+           see=Time.time;
+        }else if(gameObject.layer==Enemy_LayerN){
+           run=false;
+           see=Time.time;
+        }
+    }
+    bool AllLamps(){
+        for(int y=0;y<2;y++)
+            for(int u=0;u<3;u++)
+                if(!(y==0&&u==1)&&rooms[y,u]==false)
+                    return false;
+        return true;
+    }
+    void NotGhostPlace(){
+        if(gameObject.layer==NPC_LayerN){
+            see=Time.time;
+        }else if(gameObject.layer==Enemy_LayerN){
+            
+            if(AllLamps()){
+                run=true;
+                MOVE(ghost[0],ghost[1]);
+            }else{
+                luzes[npc[0],npc[1]].enabled = true;
+                andar = ((int)Random.Range(0,10))%2;
+                sala = ((int)Random.Range(0,9))%3;
+                run =true;
+                MOVE(andar,sala);
+            }
+        }
+    }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+            TurnOffLamps();
+
+        npcInit();
+        if(npc[0]==ghost[0] && npc[1]==ghost[1] && run==false && (Time.time - see>1 ) ){
+            print("1"+run+"    "+(Time.time-see));
+           FoundGhost();
         }else if(run==true && !( npc[0]==ghost[0] && npc[1]==ghost[1]) ){
-            run=false;
-            see=Time.time;
-        }else if(!( npc[0]==ghost[0] && npc[1]==ghost[1]) )
-            see=Time.time;
+            RunSuccess();
+             print("2"+run+"    "+(Time.time-see));
+        }else if(!( npc[0]==ghost[0] && npc[1]==ghost[1]) ){
+            NotGhostPlace();
+            print("3"+run+"    "+(Time.time-see)+ "   "+ npc[0]+" " +ghost[0] +" " +npc[1]+" "+ghost[1]) ;
+        }
+
         currentRoom = minicamera.getCurrentRoom();
         ghostInit();
         oldghost[0] = ghost[0];
