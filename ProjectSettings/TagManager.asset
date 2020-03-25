@@ -7,7 +7,6 @@ TagManager:
   - Walls
   - PlayerProjectile
   - UIContainer
-  - CameraFrame
   layers:
   - Default
   - TransparentFX
