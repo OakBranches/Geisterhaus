@@ -6,6 +6,8 @@ using UnityEngine.Experimental.Rendering.Universal;
 [RequireComponent(typeof(Light2D))]
 public class Fire : MonoBehaviour
 {
+    Animator animator;
+
     public Queue<Projectiles.Projectile> projectilePool =
         new Queue<Projectiles.Projectile>();
 
@@ -21,6 +23,7 @@ public class Fire : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         rechargeLight = GetComponentInChildren<Light2D>();
         intensity = rechargeLight.intensity;
         rechargeLight.enabled = false;
@@ -52,6 +55,7 @@ public class Fire : MonoBehaviour
             projectile.rb.velocity =
                 new Vector3(projectileSpeed * transform.localScale.x, 0f, 0f);
             lastProjectileTimer = projectileTimer;
+            animator.SetBool("shooting", true);
             StartCoroutine(RechargeLight());
         }
     }
@@ -70,5 +74,10 @@ public class Fire : MonoBehaviour
 
         rechargeLight.enabled = false;
         yield break;
+    }
+
+    void ResetAnimation()
+    {
+        animator.SetBool("shooting", false);
     }
 }

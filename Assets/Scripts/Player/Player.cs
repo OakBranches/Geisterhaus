@@ -74,8 +74,8 @@ public class Player : MonoBehaviour
     {
         if (collider.name == "Upstairs Corridor Left Door" && Input.GetKeyDown(KeyCode.E))
         {
-            gameObject.transform.position = new Vector2(-41.5f, -4.5f);
-            StartCoroutine(SmoothCameraPosition(new Vector3(-50f, 0f, -10f)));
+            StartCoroutine(SmoothCameraPosition(new Vector3(-50f, 0f, -10f),
+                new Vector2(-41.5f, -4.5f)));
         }
     }
 
@@ -83,8 +83,8 @@ public class Player : MonoBehaviour
     {
         if (collider.name == "Upstairs Corridor Right Door" && Input.GetKeyDown(KeyCode.E))
         {
-            gameObject.transform.position = new Vector2(41.5f, -4.5f);
-            StartCoroutine(SmoothCameraPosition(new Vector3(50f, 0f, -10f)));
+            StartCoroutine(SmoothCameraPosition(new Vector3(50f, 0f, -10f),
+                new Vector2(41.5f, -4.5f)));
         }
     }
 
@@ -92,8 +92,8 @@ public class Player : MonoBehaviour
     {
         if (collider.name == "Child's Bedroom Right Door" && Input.GetKeyDown(KeyCode.E))
         {
-            gameObject.transform.position = new Vector2(-8.5f, -4.5f);
-            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f)));
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f),
+                new Vector2(-8.5f, -4.5f)));
         }
     }
 
@@ -101,8 +101,8 @@ public class Player : MonoBehaviour
     {
         if (collider.name == "Parent's Bedroom Left Door" && Input.GetKeyDown(KeyCode.E))
         {
-            gameObject.transform.position = new Vector2(8.5f, -4.5f);
-            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f)));
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f),
+                new Vector2(8.5f, -4.5f)));
         }
     }
 
@@ -110,8 +110,8 @@ public class Player : MonoBehaviour
     {
         if (collider.name == "Upstairs Corridor Left Elevator" && Input.GetKeyDown(KeyCode.E))
         {
-            gameObject.transform.position = new Vector2(-11f, -33.5f);
-            StartCoroutine(SmoothCameraPosition(new Vector3(0f, -29f, -10f)));
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, -29f, -10f),
+                new Vector2(-11f, -33.5f)));
         }
     }
 
@@ -119,8 +119,8 @@ public class Player : MonoBehaviour
     {
         if (collider.name == "Downstairs Corridor Left Elevator" && Input.GetKeyDown(KeyCode.E))
         {
-            gameObject.transform.position = new Vector2(-11f, -4.5f);
-            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f)));
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f),
+                new Vector2(-11f, -4.5f)));
         }
     }
 
@@ -128,8 +128,8 @@ public class Player : MonoBehaviour
     {
         if (collider.name == "Upstairs Corridor Right Elevator" && Input.GetKeyDown(KeyCode.E))
         {
-            gameObject.transform.position = new Vector2(11f, -33.5f);
-            StartCoroutine(SmoothCameraPosition(new Vector3(0f, -29f, -10f)));
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, -29f, -10f),
+                new Vector2(11f, -33.5f)));
         }
     }
 
@@ -137,8 +137,8 @@ public class Player : MonoBehaviour
     {
         if (collider.name == "Downstairs Corridor Right Elevator" && Input.GetKeyDown(KeyCode.E))
         {
-            gameObject.transform.position = new Vector2(11f, -4.5f);
-            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f)));
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, 0f, -10f),
+                new Vector2(11f, -4.5f)));
         }
     }
 
@@ -146,8 +146,8 @@ public class Player : MonoBehaviour
     {
         if (collider.name == "Downstairs Corridor Left Door" && Input.GetKeyDown(KeyCode.E))
         {
-            gameObject.transform.position = new Vector2(-41.5f, -33.5f);
-            StartCoroutine(SmoothCameraPosition(new Vector3(-50f, -29f, -10f)));
+            StartCoroutine(SmoothCameraPosition(new Vector3(-50f, -29f, -10f),
+                new Vector2(-41.5f, -33.5f)));
         }
     }
 
@@ -155,8 +155,8 @@ public class Player : MonoBehaviour
     {
         if (collider.name == "Downstairs Corridor Right Door" && Input.GetKeyDown(KeyCode.E))
         {
-            gameObject.transform.position = new Vector2(41.5f, -33.5f);
-            StartCoroutine(SmoothCameraPosition(new Vector3(50f, -29f, -10f)));
+            StartCoroutine(SmoothCameraPosition(new Vector3(50f, -29f, -10f),
+                new Vector2(41.5f, -33.5f)));
         }
     }
 
@@ -164,8 +164,8 @@ public class Player : MonoBehaviour
     {
         if (collider.name == "Living Room Right Door" && Input.GetKeyDown(KeyCode.E))
         {
-            gameObject.transform.position = new Vector2(-8.5f, -33.5f);
-            StartCoroutine(SmoothCameraPosition(new Vector3(0f, -29f, -10f)));
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, -29f, -10f),
+                new Vector2(-8.5f, -33.5f)));
         }
     }
 
@@ -173,12 +173,12 @@ public class Player : MonoBehaviour
     {
         if (collider.name == "Kitchen Left Door" && Input.GetKeyDown(KeyCode.E))
         {
-            gameObject.transform.position = new Vector2(8.5f, -33.5f);
-            StartCoroutine(SmoothCameraPosition(new Vector3(0f, -29f, -10f)));
+            StartCoroutine(SmoothCameraPosition(new Vector3(0f, -29f, -10f),
+                new Vector2(8.5f, -33.5f)));
         }
     }
 
-    IEnumerator SmoothCameraPosition(Vector3 toWhere)
+    IEnumerator SmoothCameraPosition(Vector3 toWhere, Vector3 playerToWhere)
     {
         Time.timeScale = 0f;
         Vector3 startPosition = mainCamera.transform.position;
@@ -197,5 +197,6 @@ public class Player : MonoBehaviour
             yield return null;
         }
         Time.timeScale = 1f;
+        gameObject.transform.position = playerToWhere;
     }
 }
