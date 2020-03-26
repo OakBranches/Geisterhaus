@@ -27,9 +27,11 @@ public class NPControl : MonoBehaviour
         roomsInit();
         npcInit();
         roomDriver = GetComponent<RoomDriver>();
+        TurnOffLamps();
         ////print(npc[0]+" -  "+npc[1]);
     }
     void MOVE(int a,int b){
+
         lista = new List<Vector2>();
         roomsInit();
         int[] virtualNPC = new int[2];
@@ -89,30 +91,37 @@ public class NPControl : MonoBehaviour
     void move(){
         npcInit();
         roomDriver.canEnter=false;
-        if(lista.Count!=0){
-            
-           float step =  speed * Time.deltaTime; // calculate distance to move
-            transform.position = Vector3.MoveTowards(transform.position, lista[0], step);
-            if(gameObject.layer==Enemy_LayerN)
-           // print("toem "+transform.position+"quero ir para"+ lista[0]+"ent: "+entrando);
-            if(entrando)
-                if(new Vector2(transform.position.x,transform.position.y)!= lista[0]){
-                        lista.Remove(lista[0]);
-                        entrando=false;
-                        roomDriver.canEnter=false;
-                        ////print("esta igual\n\n\n\n");
-                        return;
-              
-            }
-            if(new Vector2(transform.position.x,transform.position.y)== lista[0]){
-                roomDriver.canEnter=true;
-                //roomDriver.OnTriggerStay2D(GetComponent<Collider2D>());
-                ////print("----------------------------------------------------");
-                entrando=true;
-                ////print("---------"+transform.position+"quero ir para"+ lista[0]+"-----------------------");
+        bool o = gameObject.layer!=Enemy_LayerN?true:!(GetComponent<Priest>().getAttackMode());
 
-                }else{
-                roomDriver.canEnter=false;
+        if(o){
+            if(lista.Count!=0){
+                
+            float step =  speed * Time.deltaTime; // calculate distance to move
+                transform.position = Vector3.MoveTowards(transform.position, lista[0], step);
+                //if(gameObject.layer==Enemy_LayerN)
+            //  print("toem "+transform.position+"quero ir para"+ lista[0]+"ent: "+entrando);
+                if(entrando){
+                    if(new Vector2(transform.position.x,transform.position.y)!= lista[0]){
+
+                            if(gameObject.layer==Enemy_LayerN)
+                            print(lista[0]);
+                            lista.Remove(lista[0]);
+                            entrando=false;
+                            roomDriver.canEnter=false;
+
+                            return;
+                    }else{
+                        roomDriver.canEnter=false;
+                    }
+                }
+                if(new Vector2(transform.position.x,transform.position.y)== lista[0]){
+                    roomDriver.canEnter=true;
+                    //roomDriver.OnTriggerStay2D(GetComponent<Collider2D>());
+                    ////print("----------------------------------------------------");
+                    entrando=true;
+                    ////print("---------"+transform.position+"quero ir para"+ lista[0]+"-----------------------");
+                }
+                
             }
         }
     }
@@ -165,15 +174,19 @@ public class NPControl : MonoBehaviour
         rooms[1,1]=luzes[1,1].enabled;
         rooms[1,2]=luzes[1,2].enabled;
     }
+
     void npcInit(){        
         npc[0]= (int)this.transform.position.y>(-10)?1:0;
-        npc[1]=(int)this.transform.position.x<-28?0:((int)this.transform.position.x>28?2:1);}
+        npc[1]=(int)this.transform.position.x<-28?0:((int)this.transform.position.x>28?2:1);
+      //  print("------------->"+(int)this.transform.position.x);
+        }
     // Update is called once per frame
     //booleana de estar no mesmo quarto que o fantasma
     bool run = false;
     //contador de reação
     float see = 0;
     void FoundGhost(){
+        
         if(gameObject.layer==NPC_LayerN){
             do{
                 andar = ((int)Random.Range(0,10))%2;
@@ -182,13 +195,13 @@ public class NPControl : MonoBehaviour
                 MOVE(andar,sala);
             }while(andar==ghost[0]&&sala==ghost[1]);
         }else if (gameObject.layer==Enemy_LayerN){
-            if(AllLamps()){
+                npcInit();
+            
                 GetComponent<Priest>().SetAttackMode(true);
-                print("aqui !!!");
-            }else{
-                GetComponent<Priest>().SetAttackMode(false);
-                NotGhostPlace();
-            }
+              //  print("aqui !!!");
+               
+                luzes[npc[0],npc[1]].enabled = true;
+          
         }
     }
     void RunSuccess(){
@@ -196,8 +209,10 @@ public class NPControl : MonoBehaviour
            run=false;
            see=Time.time;
         }else if(gameObject.layer==Enemy_LayerN){
-           run=false;
            see=Time.time;
+        //   print("oi");
+           if(entrando == true)
+                run=false;
         }
     }
     bool AllLamps(){
@@ -211,40 +226,61 @@ public class NPControl : MonoBehaviour
         if(gameObject.layer==NPC_LayerN){
             see=Time.time;
         }else if(gameObject.layer==Enemy_LayerN){
-            
+
             if(AllLamps()){
+
                 run=true;
                 MOVE(ghost[0],ghost[1]);
+                
+                //print(npc[0]+"    "+npc[1]);
             }else{
                 luzes[npc[0],npc[1]].enabled = true;
-                andar = ((int)Random.Range(0,10))%2;
-                sala = ((int)Random.Range(0,9))%3;
-                run =true;
-                MOVE(andar,sala);
+                if(run==false)
+                    do{
+                        andar = ((int)Random.Range(0,10))%2;
+                        sala = ((int)Random.Range(0,9))%3;
+                        run =true;
+                        MOVE(andar,sala);
+                    }while(luzes[andar,sala].enabled==true&&!AllLamps());
             }
         }
     }
     void Update()
     {
+        
         if (Input.GetKeyDown(KeyCode.P))
-            TurnOffLamps();
-
+        if(gameObject.layer==Enemy_LayerN){
+            for(int q=0;q<lista.Count;q++)
+                    print("listaaa ["+q+"]  = " +lista[q]);
+        
+        print("npc "+npc[0]+" "+npc[1]);
+        print(run + "     " + entrando +' '+AllLamps()+GetComponent<Priest>().getAttackMode());
+        
+        }
         npcInit();
-        if(npc[0]==ghost[0] && npc[1]==ghost[1] && run==false && (Time.time - see>1 ) ){
-            print("1"+run+"    "+(Time.time-see));
+        if(npc[0]==ghost[0] && npc[1]==ghost[1] &&( run==false && (Time.time - see>1 )||gameObject.layer==Enemy_LayerN) ){
+          //  print("1"+run+"    "+(Time.time-see));
            FoundGhost();
         }else if(run==true && !( npc[0]==ghost[0] && npc[1]==ghost[1]) ){
+
+            if(gameObject.layer==Enemy_LayerN)
+                GetComponent<Priest>().SetAttackMode(false);
             RunSuccess();
-             print("2"+run+"    "+(Time.time-see));
+           // print("2"+run+"    "+(Time.time-see));
         }else if(!( npc[0]==ghost[0] && npc[1]==ghost[1]) ){
             NotGhostPlace();
-            print("3"+run+"    "+(Time.time-see)+ "   "+ npc[0]+" " +ghost[0] +" " +npc[1]+" "+ghost[1]) ;
+            if(gameObject.layer==Enemy_LayerN)
+                GetComponent<Priest>().SetAttackMode(false);
+           // print("3"+run+"    "+(Time.time-see)+ "   "+ npc[0]+" " +ghost[0] +" " +npc[1]+" "+ghost[1]+" "+entrando) ;
         }
 
+
+       // print(npc[0]+"  "+npc[1]+"\n"+ghost[0]+"  "+ghost[1]);
         currentRoom = minicamera.getCurrentRoom();
         ghostInit();
         oldghost[0] = ghost[0];
         oldghost[1] = ghost[1];
+        
         move();
     }
 

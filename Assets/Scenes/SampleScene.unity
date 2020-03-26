@@ -9138,7 +9138,7 @@ MonoBehaviour:
   Living: {fileID: 2008221920}
   Parent: {fileID: 983668437}
   EnemyType: 
-  speed: 5
+  speed: 3
 --- !u!114 &1026896035
 MonoBehaviour:
   m_ObjectHideFlags: 0

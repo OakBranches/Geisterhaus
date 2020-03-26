@@ -23,6 +23,7 @@ public class Priest : MonoBehaviour
     public void SetAttackMode(bool i){
         AttackMode=i;
     }
+    public bool getAttackMode(){return AttackMode;}
     // Start is called before the first frame update
     void Start()
     {
