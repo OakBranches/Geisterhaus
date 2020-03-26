@@ -18,10 +18,11 @@ public class NPControl : MonoBehaviour
     private int[] npc = new int[2];
     public float  speed;
     RoomDriver roomDriver;
+    GameObject player;
     private List<Vector2> lista= new List<Vector2>(); 
     // Start is called before the first frame update
     void Start()
-    {
+    {   player=GameObject.FindGameObjectsWithTag("Player")[0];
         minicamera = FindObjectOfType<MiniCameraFrame>();
         LightsInit();
         roomsInit();
@@ -122,6 +123,11 @@ public class NPControl : MonoBehaviour
                     ////print("---------"+transform.position+"quero ir para"+ lista[0]+"-----------------------");
                 }
                 
+            }
+        }else if(gameObject.layer==Enemy_LayerN){
+            if(GetComponent<Priest>().getAttackMode()&&npc[0]==ghost[0] && npc[1]==ghost[1]){
+                float step =  speed/2 * Time.deltaTime; // calculate distance to move
+                transform.position = Vector3.MoveTowards(transform.position, new Vector2(player.transform.position.x,transform.position.y), step);
             }
         }
     }

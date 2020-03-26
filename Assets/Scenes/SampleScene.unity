@@ -9052,7 +9052,7 @@ MonoBehaviour:
   lifeManager: {fileID: 0}
   projectile: {fileID: 2482811248068315332, guid: 70738ed9358fc2841b22000a79c32f4c,
     type: 3}
-  attackTimer: 4
+  attackTimer: 3
   projectilesPerAttack: 8
   maxAttacks: 15
   framesBetweenShots: 4
