@@ -92,7 +92,7 @@ public class NPControl : MonoBehaviour
     void move(){
         npcInit();
         roomDriver.canEnter=false;
-        bool o = gameObject.layer!=Enemy_LayerN?true:!(GetComponent<Priest>().getAttackMode());
+        bool o = gameObject.layer!=Enemy_LayerN?true:!(GetComponent<Enemy>().getAttackMode());
 
         if(o){
             if(lista.Count!=0){
@@ -104,8 +104,8 @@ public class NPControl : MonoBehaviour
                 if(entrando){
                     if(new Vector2(transform.position.x,transform.position.y)!= lista[0]){
 
-                            if(gameObject.layer==Enemy_LayerN)
-                            print(lista[0]);
+                            //if(gameObject.layer==Enemy_LayerN)
+                            //print(lista[0]);
                             lista.Remove(lista[0]);
                             entrando=false;
                             roomDriver.canEnter=false;
@@ -125,7 +125,7 @@ public class NPControl : MonoBehaviour
                 
             }
         }else if(gameObject.layer==Enemy_LayerN){
-            if(GetComponent<Priest>().getAttackMode()&&npc[0]==ghost[0] && npc[1]==ghost[1]){
+            if(GetComponent<Enemy>().getAttackMode()&&npc[0]==ghost[0] && npc[1]==ghost[1]){
                 float step =  speed/2 * Time.deltaTime; // calculate distance to move
                 transform.position = Vector3.MoveTowards(transform.position, new Vector2(player.transform.position.x,transform.position.y), step);
             }
@@ -203,13 +203,14 @@ public class NPControl : MonoBehaviour
         }else if (gameObject.layer==Enemy_LayerN){
                 npcInit();
             
-                GetComponent<Priest>().SetAttackMode(true);
+                GetComponent<Enemy>().SetAttackMode(true);
               //  print("aqui !!!");
                
                 luzes[npc[0],npc[1]].enabled = true;
           
         }
     }
+    Vector3 oldP;
     void RunSuccess(){
         if(gameObject.layer==NPC_LayerN){
            run=false;
@@ -220,6 +221,11 @@ public class NPControl : MonoBehaviour
            if(entrando == true)
                 run=false;
         }
+        if(oldP==transform.position && AllLamps() && run==true && !GetComponent<Enemy>().getAttackMode() && lista.Count==0 ){
+            print("bugfix");
+            MOVE(ghost[0],ghost[1]);
+        }
+        oldP=transform.position;
     }
     bool AllLamps(){
         for(int y=0;y<2;y++)
@@ -260,24 +266,29 @@ public class NPControl : MonoBehaviour
                     print("listaaa ["+q+"]  = " +lista[q]);
         
         print("npc "+npc[0]+" "+npc[1]);
-        print(run + "     " + entrando +' '+AllLamps()+GetComponent<Priest>().getAttackMode());
+        print(run + "     " + entrando +' '+AllLamps()+GetComponent<Enemy>().getAttackMode());
         
         }
         npcInit();
         if(npc[0]==ghost[0] && npc[1]==ghost[1] &&( run==false && (Time.time - see>1 )||gameObject.layer==Enemy_LayerN) ){
-          //  print("1"+run+"    "+(Time.time-see));
+          
+            if(gameObject.layer==Enemy_LayerN)
+                print("1"+run+"    "+(Time.time-see));
            FoundGhost();
         }else if(run==true && !( npc[0]==ghost[0] && npc[1]==ghost[1]) ){
 
-            if(gameObject.layer==Enemy_LayerN)
-                GetComponent<Priest>().SetAttackMode(false);
+            
             RunSuccess();
-           // print("2"+run+"    "+(Time.time-see));
+            if(gameObject.layer==Enemy_LayerN){
+                GetComponent<Enemy>().SetAttackMode(false);
+                print("2"+run+"    "+(Time.time-see));}
         }else if(!( npc[0]==ghost[0] && npc[1]==ghost[1]) ){
             NotGhostPlace();
-            if(gameObject.layer==Enemy_LayerN)
-                GetComponent<Priest>().SetAttackMode(false);
-           // print("3"+run+"    "+(Time.time-see)+ "   "+ npc[0]+" " +ghost[0] +" " +npc[1]+" "+ghost[1]+" "+entrando) ;
+            if(gameObject.layer==Enemy_LayerN){
+                GetComponent<Enemy>().SetAttackMode(false);
+           //
+            print("3"+run+"    "+(Time.time-see)+ "   "+ npc[0]+" " +ghost[0] +" " +npc[1]+" "+ghost[1]+" "+entrando) ;
+            }
         }
 
 

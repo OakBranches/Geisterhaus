@@ -4,9 +4,8 @@ using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Animator))]
-public class Priest : MonoBehaviour
+public class Priest : Enemy
 {
-    bool AttackMode;
     Animator animator;
     BoxCollider2D boxCollider;
     Vector3 shootPosition;
@@ -20,10 +19,7 @@ public class Priest : MonoBehaviour
     public int maxAttacks = 15;
     public int framesBetweenShots = 4;
     public float projectileSpeed = 5f;
-    public void SetAttackMode(bool i){
-        AttackMode=i;
-    }
-    public bool getAttackMode(){return AttackMode;}
+
     // Start is called before the first frame update
     void Start()
     {
