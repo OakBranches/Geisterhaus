@@ -7,7 +7,7 @@ public class MiniCameraFrame : MonoBehaviour
     public static RectTransform frame;
     public RectTransform miniCamera;
 
-    public static string currentRoom;
+    public static string currentRoom="Downstairs Corridor";
     public static string oldRoom;
 
     // Start is called before the first frame update
@@ -19,8 +19,8 @@ public class MiniCameraFrame : MonoBehaviour
                 .GetComponent<RectTransform>();
         }
     }
-
-    void OnTriggerEnter2D(Collider2D other)
+    public string getCurrentRoom(){return currentRoom;}
+    void OnTriggerStay2D(Collider2D other)
     {
         if (other.transform.tag == "Player")
         {

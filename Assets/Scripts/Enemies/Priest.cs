@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Animator))]
-public class Priest : MonoBehaviour
+public class Priest : Enemy
 {
     Animator animator;
     BoxCollider2D boxCollider;
@@ -23,9 +23,11 @@ public class Priest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AttackMode=false;
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
         lifeManager = GetComponent<LifeManager>();
+        
         for (int i = 0; i < projectilesPerAttack * maxAttacks; i++)
         {
             GameObject projectileInstance = Instantiate(projectile);
@@ -40,17 +42,19 @@ public class Priest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(AttackMode){
         // A_Star();
         if (timeSinceLastAttack > 0)
         {
             timeSinceLastAttack -= Time.fixedDeltaTime;
         }
-
+        
         if (projectilePool.Count > 0 && timeSinceLastAttack <= 0f)
         {
             animator.SetTrigger("attack");
             animator.SetBool("attackFinished", false);
             timeSinceLastAttack = attackTimer;
+        }
         }
     }
 
