@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
+public class GameOver : MonoBehaviour
 {
-    [SerializeField] string arrowName = "Arrow"; 
+    [SerializeField] string arrowName = "Arrow";
     GameObject arrow;
 
     [SerializeField] string menuUIName = "Menu UI";
@@ -27,7 +26,7 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         List<string> screensList = new List<string>();
-        
+
         // Iterates through all children
         foreach (Transform child in transform)
         {
@@ -96,13 +95,13 @@ public class MainMenu : MonoBehaviour
         {
             index = limit.y;
         }
-        
+
         if (index > limit.y)
         {
             index = limit.x;
         }
 
-        arrow.transform.position = 
+        arrow.transform.position =
             new Vector3(arrow.transform.position.x,
             screenDictionary[currentScreen].GetChild(index)
             .transform.position.y,
@@ -141,23 +140,20 @@ public class MainMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            MenuOptions(index);
+            GameOverOptions(index);
         }
     }
-    private void MenuOptions(int index)
+    private void GameOverOptions(int index)
     {
         switch (index)
         {
             case 1:
-                SceneManager.LoadScene("Game");
+                SceneManager.LoadScene("Main Menu");
                 break;
             case 2:
-                Debug.Log("Implementa o tutorial ae");
-                break;
-            case 3:
                 Debug.Log("Implementa os high scores ae");
                 break;
-            case 4:
+            case 3:
                 Debug.Log("Exit");
                 Application.Quit();
                 break;

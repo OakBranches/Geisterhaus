@@ -43,8 +43,6 @@ public class MovingGhost : MonoBehaviour
         Vector3 offset = movementFactor * movementVector;
         transform.position = startingPos + offset;
 
-        print(rawSinWave);
-
         if (transform.position.x - oldP >= 0)
         {
             spriteRenderer.flipX = false;
@@ -53,10 +51,5 @@ public class MovingGhost : MonoBehaviour
         {
             spriteRenderer.flipX = true;
         }
-
-        /*if ((rawSinWave >= 0.98f && rawSinWave <= 0.99) || (rawSinWave <= -0.98f && rawSinWave >= -0.99))
-        {
-            spriteRenderer.flipX = !spriteRenderer.flipX;
-        }*/
     }
 }

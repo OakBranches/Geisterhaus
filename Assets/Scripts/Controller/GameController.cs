@@ -7,6 +7,6 @@ public class GameController : MonoBehaviour
 {
     public static void GameOver()
     {
-        Debug.Log("Implementa essa porra ae");
+        SceneManager.LoadScene("Game Over");
     }
 }
