@@ -5,14 +5,17 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class NPControl : MonoBehaviour
 {
-    public int NPC_LayerN,Enemy_LayerN;
+    public int NPC_LayerN, Enemy_LayerN;
+
     private Light2D[,] luzes = new Light2D[2,3];
-    public  Light2D Kitchen,Upstair,Downstair,Child,Living,Parent;
+    public  Light2D Kitchen, Upstair, Downstair, Child, Living, Parent;
+
     private bool[,] rooms = new bool[2,3]; 
     MiniCameraFrame minicamera;
     public string EnemyType;
     private int[] ghost = new int[2]; 
-    private Enemy enemy;
+    Enemy enemy;
+    public Animator animator;
     string currentRoom;
     private int[] oldghost = new int[2];
     int andar,sala;
@@ -20,41 +23,47 @@ public class NPControl : MonoBehaviour
     public float  speed;
     RoomDriver roomDriver;
     GameObject player;
-    private List<Vector2> lista= new List<Vector2>(); 
+    private List<Vector2> lista = new List<Vector2>(); 
+    public bool facingRight { get; private set; }
+    bool entrando = false;
+
     // Start is called before the first frame update
     void Start()
-    {   player=GameObject.FindGameObjectsWithTag("Player")[0];
+    {   
+        facingRight = true;
+        animator = GetComponent<Animator>();
+        player = GameObject.FindGameObjectsWithTag("Player")[0];
         minicamera = FindObjectOfType<MiniCameraFrame>();
         LightsInit();
         roomsInit();
         npcInit();
         roomDriver = GetComponent<RoomDriver>();
-        enemy = (gameObject.layer==Enemy_LayerN?GetComponent<Enemy>():null);
+        enemy = (gameObject.layer == Enemy_LayerN ? GetComponent<Enemy>() : null);
         TurnOffLamps();
-        ////print(npc[0]+" -  "+npc[1]);
+        //print(npc[0]+" -  "+npc[1]);
     }
-    void MOVE(int a,int b){
+    void MOVE(int a, int b){
 
         lista = new List<Vector2>();
         roomsInit();
         int[] virtualNPC = new int[2];
-        virtualNPC[0]=npc[0];
-        virtualNPC[1]=npc[1];
-        int i=0;
-        float piso=0;
-        while( (virtualNPC[0] != a || virtualNPC[1] != b)&&i<10){
-             i++;
-             piso = virtualNPC[0]==1?-3.98f:-33.1f;
+        virtualNPC[0] = npc[0];
+        virtualNPC[1] = npc[1];
+        int i = 0;
+        float piso = 0;
+        while( (virtualNPC[0] != a || virtualNPC[1] != b) && i < 10){
+            i++;
+            piso = virtualNPC[0] == 1 ? -4f : -33f;
             
             //os andares são diferentes
-            if (a != virtualNPC[0] ) {
+            if (a != virtualNPC[0]) {
                 //go to corredor
-                if(virtualNPC[1]==1){
+                if(virtualNPC[1] == 1){
                     //no corredor
                     int p=Random.Range(0,1);
-                    lista.Add(new Vector2((p>0.5f?1:-1)*11f,piso));
+                    lista.Add(new Vector2((p > 0.5f ? 1 : -1) * 11f, piso));
                     //print(p);
-                    virtualNPC[0]=a;
+                    virtualNPC[0] = a;
                      //print("1 " +virtualNPC[0] +"  to em  " +virtualNPC[1] );
                 }else{
                     //qqr sala adj.
@@ -69,7 +78,7 @@ public class NPControl : MonoBehaviour
                     //pegar a porta para ir para o corredor
                     lista.Add(new Vector2((virtualNPC[1]>b?1:-1)*41.5f,piso));
                     virtualNPC[1]=1;
-                     //print("3 "  +virtualNPC[0] +"  to em  " +virtualNPC[1] );
+                    //print("3 "  +virtualNPC[0] +"  to em  " +virtualNPC[1] );
                      
                 }else{
                     //seguir reto do corredor
@@ -80,9 +89,9 @@ public class NPControl : MonoBehaviour
                         lista.Add(new Vector2((virtualNPC[1]>b?1:-1)*41.5f,piso));
                     }
                      
-                     virtualNPC[1]+=(virtualNPC[1]>b?-1:1);
+                    virtualNPC[1]+=(virtualNPC[1]>b?-1:1);
 
-                     //print("4 "+ virtualNPC[0] +"  to em  " +virtualNPC[1] );
+                    //print("4 "+ virtualNPC[0] +"  to em  " +virtualNPC[1] );
                 }
 
             }
@@ -90,7 +99,6 @@ public class NPControl : MonoBehaviour
         }
     }
 
-    bool entrando = false;
     void move(){
         npcInit();
         roomDriver.canEnter=false;
@@ -98,12 +106,11 @@ public class NPControl : MonoBehaviour
 
         if(o){
             if(lista.Count!=0){
-                
-            float step =  speed * Time.deltaTime; // calculate distance to move
-                transform.position = Vector3.MoveTowards(transform.position, lista[0], step);
+                CalculateMovement();
                 //if(gameObject.layer==Enemy_LayerN)
-            //  print("toem "+transform.position+"quero ir para"+ lista[0]+"ent: "+entrando);
-                if(entrando){
+                //print("toem "+transform.position+"quero ir para"+ lista[0]+"ent: "+entrando);
+                if(entrando)
+                {
                     if(new Vector2(transform.position.x,transform.position.y)!= lista[0]){
 
                             //if(gameObject.layer==Enemy_LayerN)
@@ -128,8 +135,7 @@ public class NPControl : MonoBehaviour
             }
         }else if(gameObject.layer==Enemy_LayerN){
             if(enemy.getAttackMode()&&npc[0]==ghost[0] && npc[1]==ghost[1]){
-                enemy.AttackMove(speed);
-               
+                enemy.AttackMove(speed);  
             }
         }
     }
@@ -303,4 +309,44 @@ public class NPControl : MonoBehaviour
         move();
     }
 
+    public void Flip()
+    {
+        Vector3 newScale = transform.localScale;
+        newScale.x *= -1f;
+        transform.localScale = newScale;
+        facingRight = !facingRight;
+    }
+
+    void CalculateMovement()
+    {
+        float step =  speed * Time.deltaTime; // calculate distance to move
+        float toWhere = lista[0].x - transform.position.x;
+        Vector3 velocity = new Vector3(speed, 0f, 0f);
+        if (toWhere < -0.05)
+        {
+            velocity.x *= -1f;
+        }
+
+        if (-0.05f < toWhere && toWhere < 0.05f)
+        {
+            velocity.x = 0f;
+        }
+
+        if ((velocity.x < 0f && facingRight) ||
+            (velocity.x > 0f && !facingRight))
+        {
+            Flip();
+        }
+
+        transform.position = Vector3.MoveTowards(transform.position, lista[0], step);
+
+        if (velocity.x != 0)
+        {
+            animator.SetBool("walking", true);
+        }
+        else
+        {
+            animator.SetBool("walking", false);
+        }
+    }
 }

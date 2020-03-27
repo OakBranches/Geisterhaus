@@ -4,10 +4,15 @@ using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(NPControl))]
 public class Priest : Enemy
 {
     Animator animator;
     BoxCollider2D boxCollider;
+    Rigidbody2D rb;
+    NPControl control;
+
     Vector3 shootPosition;
 	public LifeManager lifeManager;
     public GameObject projectile;
@@ -19,17 +24,52 @@ public class Priest : Enemy
     public int maxAttacks = 15;
     public int framesBetweenShots = 4;
     public float projectileSpeed = 5f;
-    public override void AttackMove(float speed){
-        float step =  speed/2 * Time.deltaTime; // calculate distance to move
-        transform.position = Vector3.MoveTowards(transform.position, new Vector2(player.transform.position.x,transform.position.y), step);
+    bool isAttacking = false;
+
+    public override void AttackMove(float speed)
+    {
+        if (!isAttacking)
+        {
+            float step = Time.deltaTime * speed;
+            float toWhere = player.transform.position.x - transform.position.x;
+            Vector3 velocity = new Vector3(speed, 0f, 0f);
+            if (toWhere < -0.05)
+            {
+                velocity.x *= -1f;
+            }
+
+            if (-0.05f < toWhere && toWhere < 0.05f)
+            {
+                velocity.x = 0f;
+            }
+
+            if ((velocity.x < 0f && control.facingRight) ||
+                (velocity.x > 0f && !control.facingRight))
+            {
+                control.Flip();
+            }
+
+            rb.velocity = velocity;
+
+            if (velocity.x != 0)
+            {
+                control.animator.SetBool("walking", true);
+            }
+            else
+            {
+                control.animator.SetBool("walking", false);
+            }
+        }
     }
+
     // Start is called before the first frame update
     void Start()
     {
-
-        player = GameObject.FindGameObjectsWithTag("Player")[0];
-        AttackMode=false;
+        control = GetComponent<NPControl>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        attackMode = false;
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         lifeManager = GetComponent<LifeManager>();
         
@@ -47,19 +87,26 @@ public class Priest : Enemy
     // Update is called once per frame
     void Update()
     {
-        if(AttackMode){
-        // A_Star();
-        if (timeSinceLastAttack > 0)
+        if (attackMode)
         {
-            timeSinceLastAttack -= Time.fixedDeltaTime;
+            if (timeSinceLastAttack > 0)
+            {
+                timeSinceLastAttack -= Time.fixedDeltaTime;
+            }
+            
+            if (projectilePool.Count > 0 && timeSinceLastAttack <= 0f)
+            {
+                animator.SetTrigger("attack");
+                animator.SetBool("attackFinished", false);
+                timeSinceLastAttack = attackTimer;
+                isAttacking = true;
+            }
         }
-        
-        if (projectilePool.Count > 0 && timeSinceLastAttack <= 0f)
+
+        if (isAttacking)
         {
-            animator.SetTrigger("attack");
-            animator.SetBool("attackFinished", false);
-            timeSinceLastAttack = attackTimer;
-        }
+            rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
+            animator.SetBool("walking", false);
         }
     }
 
@@ -72,6 +119,7 @@ public class Priest : Enemy
     {
         animator.ResetTrigger("attack");
         animator.SetBool("attackFinished", true);
+        isAttacking = false;
     }
 
     IEnumerator AttackSpiral()
