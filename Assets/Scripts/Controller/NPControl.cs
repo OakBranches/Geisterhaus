@@ -12,6 +12,7 @@ public class NPControl : MonoBehaviour
     MiniCameraFrame minicamera;
     public string EnemyType;
     private int[] ghost = new int[2]; 
+    private Enemy enemy;
     string currentRoom;
     private int[] oldghost = new int[2];
     int andar,sala;
@@ -28,6 +29,7 @@ public class NPControl : MonoBehaviour
         roomsInit();
         npcInit();
         roomDriver = GetComponent<RoomDriver>();
+        enemy = (gameObject.layer==Enemy_LayerN?GetComponent<Enemy>():null);
         TurnOffLamps();
         ////print(npc[0]+" -  "+npc[1]);
     }
@@ -92,7 +94,7 @@ public class NPControl : MonoBehaviour
     void move(){
         npcInit();
         roomDriver.canEnter=false;
-        bool o = gameObject.layer!=Enemy_LayerN?true:!(GetComponent<Enemy>().getAttackMode());
+        bool o = gameObject.layer!=Enemy_LayerN?true:!(enemy.getAttackMode());
 
         if(o){
             if(lista.Count!=0){
@@ -125,9 +127,9 @@ public class NPControl : MonoBehaviour
                 
             }
         }else if(gameObject.layer==Enemy_LayerN){
-            if(GetComponent<Enemy>().getAttackMode()&&npc[0]==ghost[0] && npc[1]==ghost[1]){
-                float step =  speed/2 * Time.deltaTime; // calculate distance to move
-                transform.position = Vector3.MoveTowards(transform.position, new Vector2(player.transform.position.x,transform.position.y), step);
+            if(enemy.getAttackMode()&&npc[0]==ghost[0] && npc[1]==ghost[1]){
+                enemy.AttackMove(speed);
+               
             }
         }
     }
@@ -203,7 +205,7 @@ public class NPControl : MonoBehaviour
         }else if (gameObject.layer==Enemy_LayerN){
                 npcInit();
             
-                GetComponent<Enemy>().SetAttackMode(true);
+                enemy.SetAttackMode(true);
               //  print("aqui !!!");
                
                 luzes[npc[0],npc[1]].enabled = true;
@@ -221,8 +223,8 @@ public class NPControl : MonoBehaviour
            if(entrando == true)
                 run=false;
         }
-        if(oldP==transform.position && AllLamps() && run==true && !GetComponent<Enemy>().getAttackMode() && lista.Count==0 ){
-            print("bugfix");
+        if(oldP==transform.position && AllLamps() && run==true && !enemy.getAttackMode() && lista.Count==0 ){
+      //      print("bugfix");
             MOVE(ghost[0],ghost[1]);
         }
         oldP=transform.position;
@@ -266,28 +268,28 @@ public class NPControl : MonoBehaviour
                     print("listaaa ["+q+"]  = " +lista[q]);
         
         print("npc "+npc[0]+" "+npc[1]);
-        print(run + "     " + entrando +' '+AllLamps()+GetComponent<Enemy>().getAttackMode());
+        print(run + "     " + entrando +' '+AllLamps()+enemy.getAttackMode());
         
         }
         npcInit();
         if(npc[0]==ghost[0] && npc[1]==ghost[1] &&( run==false && (Time.time - see>1 )||gameObject.layer==Enemy_LayerN) ){
           
-            if(gameObject.layer==Enemy_LayerN)
-                print("1"+run+"    "+(Time.time-see));
+       //     if(gameObject.layer==Enemy_LayerN)
+         //       print("1"+run+"    "+(Time.time-see));
            FoundGhost();
         }else if(run==true && !( npc[0]==ghost[0] && npc[1]==ghost[1]) ){
 
             
             RunSuccess();
             if(gameObject.layer==Enemy_LayerN){
-                GetComponent<Enemy>().SetAttackMode(false);
-                print("2"+run+"    "+(Time.time-see));}
+                enemy.SetAttackMode(false);
+                //print("2"+run+"    "+(Time.time-see));
+                }
         }else if(!( npc[0]==ghost[0] && npc[1]==ghost[1]) ){
             NotGhostPlace();
             if(gameObject.layer==Enemy_LayerN){
-                GetComponent<Enemy>().SetAttackMode(false);
-           //
-            print("3"+run+"    "+(Time.time-see)+ "   "+ npc[0]+" " +ghost[0] +" " +npc[1]+" "+ghost[1]+" "+entrando) ;
+                enemy.SetAttackMode(false);
+           // print("3"+run+"    "+(Time.time-see)+ "   "+ npc[0]+" " +ghost[0] +" " +npc[1]+" "+ghost[1]+" "+entrando) ;
             }
         }
 

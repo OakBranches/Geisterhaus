@@ -19,10 +19,15 @@ public class Priest : Enemy
     public int maxAttacks = 15;
     public int framesBetweenShots = 4;
     public float projectileSpeed = 5f;
-
+    public override void AttackMove(float speed){
+        float step =  speed/2 * Time.deltaTime; // calculate distance to move
+        transform.position = Vector3.MoveTowards(transform.position, new Vector2(player.transform.position.x,transform.position.y), step);
+    }
     // Start is called before the first frame update
     void Start()
     {
+
+        player = GameObject.FindGameObjectsWithTag("Player")[0];
         AttackMode=false;
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
