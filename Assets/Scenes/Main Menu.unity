@@ -765,6 +765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highScores: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  names: []
 --- !u!1 &744220892
 GameObject:
   m_ObjectHideFlags: 0

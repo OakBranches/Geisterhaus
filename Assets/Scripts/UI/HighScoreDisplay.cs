@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HighScoreDisplay : MonoBehaviour
 {
@@ -17,7 +18,10 @@ public class HighScoreDisplay : MonoBehaviour
         scoreText = gameObject.GetComponentsInChildren<Text>();
         score = FindObjectOfType<ScoreManager>();
 
-        UpdateDisplay();
+        if (SceneManager.GetActiveScene().name == "Main Menu")
+        {
+            UpdateDisplay();
+        }
         DontDestroyOnLoad(this);
     }
 
