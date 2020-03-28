@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
+public class GameOverMenu : MonoBehaviour
 {
     [SerializeField] string arrowName = "Arrow"; 
     GameObject arrow;
@@ -59,21 +59,21 @@ public class MainMenu : MonoBehaviour
         SetArrowPosition();
         oldScreen = currentScreen;
 
-        DetectEnterInput();
-
         if (oldScreen != currentScreen)
         {
             ResetUI(currentScreen);
         }
+
+        DetectEnterInput();
     }
 
     void SetArrowPosition()
     {
+        Debug.Log(currentScreen + " " + oldScreen + " " + index);
+
         int limitsIndex = System.Array
             .BinarySearch(screens, currentScreen);
         PairInt limit;
-
-        Debug.Log(currentScreen + " " + oldScreen + " " + index);
 
         if (limitsIndex >= 0 && limits.Length > 0)
         {
@@ -141,31 +141,24 @@ public class MainMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            if (currentScreen == "Menu UI")
-            {
+            if (screenDictionary[currentScreen].gameObject.activeInHierarchy)
                 MenuOptions(index);
-            }
-            else if (currentScreen == "High Scores")
-            {
-                currentScreen = "Menu UI";
-            }
         }
     }
-    
     private void MenuOptions(int index)
     {
+        int limitsIndex = System.Array
+            .BinarySearch(screens, currentScreen);
+
         switch (index)
         {
+            case 0:
+                SceneManager.LoadScene("Main Menu");
+                break;
             case 1:
                 SceneManager.LoadScene("Game");
                 break;
             case 2:
-                Debug.Log("Implementa o tutorial ae");
-                break;
-            case 3:
-                currentScreen = "High Scores";
-                break;
-            case 4:
                 Debug.Log("Exit");
                 Application.Quit();
                 break;

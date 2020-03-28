@@ -178,7 +178,10 @@ public class RoomDriver : MonoBehaviour
             }
             Time.timeScale = 1f;
         }
-
+        if (gameObject.name == "Boy")
+        {
+            playerPosition.y -= 0.5f;
+        }
         gameObject.transform.position = playerPosition; 
         canEnter = false;
     }

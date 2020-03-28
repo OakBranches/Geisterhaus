@@ -16,8 +16,7 @@ public class Priest : Enemy
     Vector3 shootPosition;
 	public LifeManager lifeManager;
     public GameObject projectile;
-    public static Queue<Projectiles.Projectile> projectilePool =
-        new Queue<Projectiles.Projectile>();
+    public static Queue<Projectiles.Projectile> projectilePool;
     public float attackTimer = 2.5f;
     float timeSinceLastAttack = 0f;
     public int projectilesPerAttack = 8;
@@ -72,6 +71,10 @@ public class Priest : Enemy
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         lifeManager = GetComponent<LifeManager>();
+        if (projectilePool == null)
+        {
+            projectilePool = new Queue<Projectiles.Projectile>();
+        }
         
         for (int i = 0; i < projectilesPerAttack * maxAttacks; i++)
         {

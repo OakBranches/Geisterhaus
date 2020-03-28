@@ -8,6 +8,7 @@ TagManager:
   - PlayerProjectile
   - UIContainer
   - CameraFrame
+  - LightContainer
   layers:
   - Default
   - TransparentFX
