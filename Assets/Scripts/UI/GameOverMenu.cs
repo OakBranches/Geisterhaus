@@ -26,6 +26,7 @@ public class GameOverMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Priest.projectilePool = new Queue<Projectiles.Projectile>();
         List<string> screensList = new List<string>();
         
         // Iterates through all children
@@ -163,7 +164,7 @@ public class GameOverMenu : MonoBehaviour
                 Application.Quit();
                 break;
             default:
-                Debug.LogError("Please check MainMenu.cs for missing case in MenuOptions");
+                Debug.LogError("Please check GamerOverMenu.cs for missing case in GameOverOptions");
                 break;
         }
     }

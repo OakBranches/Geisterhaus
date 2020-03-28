@@ -9,10 +9,12 @@ public class PriestProjectile : MonoBehaviour
     Collider2D projectileCollider;
     Rigidbody2D rb;
 	public float dano;
+    HighScoreDisplay highScore;
 
     void Start()
     {   
         projectileCollider = GetComponent<Collider2D>();
+        highScore = FindObjectOfType<HighScoreDisplay>();
 
         if (player == null)
         {
@@ -40,7 +42,8 @@ public class PriestProjectile : MonoBehaviour
             {
 				if(player.lifeManager.subLife(dano))
                 {
-				    // Fim de jogo
+                    // Fim de jogo
+                    highScore.SaveScores();
                     GameController.GameOver();
                 }
             }

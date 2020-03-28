@@ -9,9 +9,11 @@ public class PlayerProjectile : MonoBehaviour
 	public float dano;
     Collider2D projectileCollider;
     Rigidbody2D rb;
+    ScoreManager score;
 
     void Start()
-    {   
+    {
+        score = FindObjectOfType<ScoreManager>();
         projectileCollider = GetComponent<Collider2D>();
 
         if (fire == null)
@@ -40,7 +42,8 @@ public class PlayerProjectile : MonoBehaviour
             {
 				if (other.gameObject.GetComponent<LifeManager>().subLife(dano))
 				{
-                    Destroy(other.gameObject);			
+                    score.AddScore(10);
+                    Destroy(other.gameObject);
                 }
             }
         }   
