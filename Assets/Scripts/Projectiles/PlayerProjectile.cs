@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerProjectile : MonoBehaviour
 {
     public static Collider2D playerCollider;
-	public float dano;
+	public float dano,chanceDeDropar;
+    public GameObject drop;
     Collider2D projectileCollider;
     Rigidbody2D rb;
     ScoreManager score;
@@ -36,6 +37,9 @@ public class PlayerProjectile : MonoBehaviour
             {
 				if (other.gameObject.GetComponent<LifeManager>().subLife(dano))
 				{
+                    bool rand = Random.Range(0,1) <= chanceDeDropar; 
+                    if(rand)
+                         Instantiate(drop, other.gameObject.transform.position, Quaternion.identity);
                     score.AddScore(100);
                     other.gameObject.GetComponent<Enemy>().Die();
                 }
