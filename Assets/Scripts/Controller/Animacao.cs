@@ -58,6 +58,9 @@ public class Animacao : MonoBehaviour
         mae.GetComponent<Animator>().SetBool("fan", true);
         camera.GetComponent<Animator>().SetBool("fan", true);
     }
+    void ChangeScene(){
+        print("TROCAR DE CENA");
+    }
     // Update is called once per frame
     void Update()
     {
