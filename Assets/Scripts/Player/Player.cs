@@ -18,8 +18,6 @@ public class Player : MonoBehaviour
 		lifeManager = GetComponent<LifeManager>();
         rb = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
-
-        
     }
 
     // Update is called once per frame

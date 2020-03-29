@@ -26,6 +26,9 @@ public class GameOverMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Priest.projectilePool = new Queue<Projectiles.Projectile>();
+        Bishop.laserPool = new Queue<Projectiles.Projectile>();
+
         List<string> screensList = new List<string>();
         
         // Iterates through all children
@@ -69,8 +72,6 @@ public class GameOverMenu : MonoBehaviour
 
     void SetArrowPosition()
     {
-        Debug.Log(currentScreen + " " + oldScreen + " " + index);
-
         int limitsIndex = System.Array
             .BinarySearch(screens, currentScreen);
         PairInt limit;
@@ -159,7 +160,6 @@ public class GameOverMenu : MonoBehaviour
                 SceneManager.LoadScene("Game");
                 break;
             case 2:
-                Debug.Log("Exit");
                 Application.Quit();
                 break;
             default:

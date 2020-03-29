@@ -11,7 +11,8 @@ public class LightController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        light = GetComponent<Light2D>();    
+        light = GetComponent<Light2D>();
+        light.enabled = false;    
     }
 
     void OnTriggerStay2D(Collider2D other)

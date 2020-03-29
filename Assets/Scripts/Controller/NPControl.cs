@@ -42,8 +42,6 @@ public class NPControl : MonoBehaviour
         npcInit();
         roomDriver = GetComponent<RoomDriver>();
         enemy = (gameObject.layer == Enemy_LayerN ? GetComponent<Enemy>() : null);
-        TurnOffLamps();
-        //print(npc[0]+" -  "+npc[1]);
     }
 
     void FindLights()
@@ -87,6 +85,7 @@ public class NPControl : MonoBehaviour
     {
         lista = new List<Vector2>();
         roomsInit();
+        npcInit();
         int[] virtualNPC = new int[2];
         virtualNPC[0] = npc[0];
         virtualNPC[1] = npc[1];
@@ -115,17 +114,13 @@ public class NPControl : MonoBehaviour
                     //no corredor
                     int p = Random.Range(0,1);
                     lista.Add(new Vector2((p > 0.5f ? 1 : -1) * 11f, piso));
-                    //print(p);
                     virtualNPC[0] = a;
-                     //print("1 " + virtualNPC[0] +"  to em  " + virtualNPC[1] );
                 }
                 else
                 {
                     //qqr sala adj.
                     lista.Add(new Vector2((virtualNPC[1]>1?1f:-1f)*41.5f,piso));
                     virtualNPC[1] = 1;
-
-                     //print("2 " + virtualNPC[0] +"  to em  " + virtualNPC[1] );
                 }
             }
             else
@@ -135,9 +130,7 @@ public class NPControl : MonoBehaviour
                 {
                     //pegar a porta para ir para o corredor
                     lista.Add(new Vector2((virtualNPC[1]>b?1:-1)*41.5f,piso));
-                    virtualNPC[1]=1;
-                    //print("3 "  +virtualNPC[0] +"  to em  " +virtualNPC[1] );
-                     
+                    virtualNPC[1]=1;                     
                 }
                 else
                 {
@@ -151,10 +144,7 @@ public class NPControl : MonoBehaviour
                     }
                      
                     virtualNPC[1]+=(virtualNPC[1]>b?-1:1);
-
-                    //print("4 "+ virtualNPC[0] +"  to em  " +virtualNPC[1] );
                 }
-
             }
 
         }
@@ -162,27 +152,26 @@ public class NPControl : MonoBehaviour
 
     void move(){
         npcInit();
-        roomDriver.canEnter=false;
-        bool o = gameObject.layer != Enemy_LayerN ? true : !(enemy.getAttackMode());
+        roomDriver.canEnter = false;
+        if (ghost[0] != npc[0] && ghost[1] != npc[1]
+            && gameObject.layer == Enemy_LayerN)
+        {
+            enemy.SetAttackMode(false);
+            run = false;
+        }
 
-        if(o){
+        bool o = gameObject.layer != Enemy_LayerN ? true : !enemy.getAttackMode();
+        Vector2 posAtual = new Vector2(transform.position.x, transform.position.y);
+        if (o)
+        {
             if (lista.Count != 0)
             {
                 CalculateMovement();
-                //if(gameObject.layer==Enemy_LayerN)
-                //print("to em " + transform.position + "quero ir para" + lista[0] + " ent: "+entrando);
-                if (entrando)
-                {
-                    entrando = false;
-                    roomDriver.canEnter = false;
-                    lista.Remove(lista[0]);
-                    return;
-                }
-                if (new Vector2(transform.position.x, transform.position.y) == lista[0])
+                if (Vector2.Distance(posAtual, lista[0]) < 0.1f)
                 {
                     if (!geradoAleatoriamente)
                     {
-                        roomDriver.canEnter=true;
+                        roomDriver.canEnter = true;
                         entrando = true;
                     }
                     else if (geradoAleatoriamente)
@@ -190,7 +179,12 @@ public class NPControl : MonoBehaviour
                         geradoAleatoriamente = false;
                         lista.Remove(lista[0]);
                     }
-                    ////print("---------"+transform.position+"quero ir para"+ lista[0]+"-----------------------");
+                }
+                if (entrando)
+                {
+                    entrando = false;
+                    lista.Remove(lista[0]);
+                    return;
                 }
             }
             else if ((ghost[0] != npc[0] || ghost[1] != npc[1])
@@ -202,10 +196,49 @@ public class NPControl : MonoBehaviour
                 geradoAleatoriamente = true;
                 lista.Add(new Vector2(toWhere, transform.position.y));
             }
+            else if (lista.Count == 0 && gameObject.layer == Enemy_LayerN)
+            {
+                do
+                {
+                    andar = ((int)Random.Range(0, 10))%2;
+                    sala = ((int)Random.Range(0, 9))%3;
+                    run = true;
+                    if (!luzes[npc[0], npc[1]].enabled)
+                    {
+                        MOVE(andar, sala, luzes[npc[0], npc[1]].transform.position);
+                    }
+                    else
+                        MOVE(andar, sala);
+                }
+                while(luzes[andar, sala].enabled == true && !AllLamps());
+            }
         }
         else if(gameObject.layer == Enemy_LayerN){
-            if(enemy.getAttackMode() && npc[0] == ghost[0] && npc[1] == ghost[1]){
-                enemy.AttackMove(speed);  
+            if (enemy.getAttackMode() && npc[0] == ghost[0] && npc[1] == ghost[1]
+                && AllLamps())
+            {
+                enemy.AttackMove(speed, Vector3.zero);  
+            }
+            else if (enemy.getAttackMode() && npc[0] == ghost[0] && npc[1] == ghost[1]
+                && !AllLamps() && lista.Count != 0)
+            {
+                enemy.AttackMove(speed, lista[0]);
+            }
+            
+            if (lista.Count != 0)
+            {
+                if (Vector2.Distance(posAtual, lista[0]) < 0.1f)
+                {
+                    roomDriver.canEnter = true;
+                    entrando = true;
+                }
+
+                if (entrando)
+                {
+                    entrando = false;
+                    lista.Remove(lista[0]);
+                    return;
+                }
             }
         }
     }
@@ -233,14 +266,6 @@ public class NPControl : MonoBehaviour
         }
     }
 
-    void TurnOffLamps()
-    {
-        for(int y=0;y<2;y++)
-            for(int u=0;u<3;u++)
-                if(!(y==0&&u==1)&&rooms[y,u]==true)
-                    luzes[y,u].enabled = false;
-    }
-
     void LightsInit()
     {
         luzes[0,0]=Living;
@@ -266,7 +291,6 @@ public class NPControl : MonoBehaviour
         npc[0]= (int) this.transform.position.y > -10 ? 1 : 0;
         npc[1]= (int) this.transform.position.x < -28 ? 0 : 
             ((int) this.transform.position.x > 28 ? 2 : 1);
-        //print("------------->"+(int)this.transform.position.x);
     }
 
     // Update is called once per frame
@@ -291,11 +315,11 @@ public class NPControl : MonoBehaviour
             npcInit();
         
             enemy.SetAttackMode(true);
-            //print("aqui !!!");s
         }
     }
     
     Vector3 oldP;
+    
     void RunSuccess(){
         if (gameObject.layer == NPC_LayerN){
            run = false;
@@ -311,17 +335,27 @@ public class NPControl : MonoBehaviour
         if (oldP == transform.position && AllLamps() &&
             run == true && !enemy.getAttackMode() && lista.Count == 0)
         {
-            //print("bugfix");
-            MOVE(ghost[0],ghost[1]);
+            MOVE(ghost[0], ghost[1]);
         }
-        oldP=transform.position;
+        oldP = transform.position;
     }
 
     bool AllLamps(){
         for (int y = 0; y < 2; y++)
+        {
             for (int u = 0; u < 3; u++)
-                if (!(y == 0 && u == 1) && rooms[y, u] == false)
+            {
+                if (y == 0 && u == 1)
+                {
+                    continue;
+                }
+
+                if (rooms[y, u] == false)
+                {
                     return false;
+                }
+            }
+        }
         return true;
     }
 
@@ -341,17 +375,18 @@ public class NPControl : MonoBehaviour
             {
                 if(run == false)
                 {
+                    npcInit();
                     do
                     {
                         andar = ((int)Random.Range(0, 10))%2;
                         sala = ((int)Random.Range(0, 9))%3;
-                        run =true;
+                        run = true;
                         if (!luzes[npc[0], npc[1]].enabled)
                             MOVE(andar, sala, luzes[npc[0], npc[1]].transform.position);
                         else
                             MOVE(andar, sala);
                     }
-                    while(luzes[andar,sala].enabled == true && !AllLamps());
+                    while(luzes[andar, sala].enabled == true && !AllLamps());
                 }
             }
         }
@@ -360,16 +395,16 @@ public class NPControl : MonoBehaviour
     {
         npcInit();
         if (npc[0] == ghost[0] && npc[1] == ghost[1] &&
-            (run == false && (Time.time - see > 1 ) ||
+            (run == false && (Time.time - see > 1) ||
             gameObject.layer == Enemy_LayerN) &&
             !geradoAleatoriamente)
         {
             FoundGhost();
         }
-        else if(run==true && !(npc[0]==ghost[0] && npc[1]==ghost[1]))
+        else if(run == true && !(npc[0] == ghost[0] && npc[1] == ghost[1]))
         { 
             RunSuccess();
-            if(gameObject.layer==Enemy_LayerN)
+            if(gameObject.layer == Enemy_LayerN)
             {
                 enemy.SetAttackMode(false);
             }

@@ -40,7 +40,7 @@ public class PriestProjectile : MonoBehaviour
             {
 				if(player.lifeManager.subLife(dano))
                 {
-				    // Fim de jogo
+                    // Fim de jogo
                     GameController.GameOver();
                 }
             }

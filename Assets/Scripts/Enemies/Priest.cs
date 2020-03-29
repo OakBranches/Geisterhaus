@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(NPControl))]
+
 public class Priest : Enemy
 {
     Animator animator;
@@ -24,20 +25,28 @@ public class Priest : Enemy
     public int framesBetweenShots = 4;
     public float projectileSpeed = 5f;
     bool isAttacking = false;
+    float rotationalOffset;
 
-    public override void AttackMove(float speed)
+    public override void AttackMove(float speed, Vector3 toWhere)
     {
         if (!isAttacking)
         {
             float step = Time.deltaTime * speed;
-            float toWhere = player.transform.position.x - transform.position.x;
+            float directionX;
+
+            if (toWhere == Vector3.zero)
+            {
+                toWhere.x = player.transform.position.x;
+            }
+
             Vector3 velocity = new Vector3(speed, 0f, 0f);
-            if (toWhere < -0.05)
+            directionX = toWhere.x - transform.position.x;
+            if (directionX < -0.05)
             {
                 velocity.x *= -1f;
             }
 
-            if (-0.05f < toWhere && toWhere < 0.05f)
+            if (-0.05f < directionX && directionX < 0.05f)
             {
                 velocity.x = 0f;
             }
@@ -48,7 +57,10 @@ public class Priest : Enemy
                 control.Flip();
             }
 
-            rb.velocity = velocity;
+            Vector3 targetPosition = new Vector3(toWhere.x, transform.position.y, 0f);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+
+            rb.velocity = Vector3.zero;
 
             if (velocity.x != 0)
             {
@@ -64,6 +76,7 @@ public class Priest : Enemy
     // Start is called before the first frame update
     void Start()
     {
+        rotationalOffset = Random.Range(0f, 2 * Mathf.PI);
         control = GetComponent<NPControl>();
         player = GameObject.FindGameObjectWithTag("Player");
         attackMode = false;
@@ -101,7 +114,6 @@ public class Priest : Enemy
             {
                 animator.SetTrigger("attack");
                 animator.SetBool("attackFinished", false);
-                timeSinceLastAttack = attackTimer;
                 isAttacking = true;
             }
         }
@@ -123,6 +135,7 @@ public class Priest : Enemy
         animator.ResetTrigger("attack");
         animator.SetBool("attackFinished", true);
         isAttacking = false;
+        timeSinceLastAttack = attackTimer;
     }
 
     IEnumerator AttackSpiral()
@@ -141,12 +154,18 @@ public class Priest : Enemy
             
             projectileCopy.instance.transform.position = shootPosition;
 
-            projectileCopy.rb.velocity = new Vector3(projectileSpeed * Mathf.Cos(angle),
-                projectileSpeed * Mathf.Sin(angle), 0f);
+            projectileCopy.rb.velocity = new Vector3(projectileSpeed * Mathf.Cos(angle + rotationalOffset),
+                projectileSpeed * Mathf.Sin(angle + rotationalOffset), 0f);
             for (int j = 0; j < framesBetweenShots; j++)
             {
                 yield return null;
             }
         }
+    }
+
+    public override void Die()
+    {
+        gameObject.SetActive(false);
+        EnemySpawner.priestPool.Enqueue(new Projectiles.Projectile(rb, gameObject));
     }
 }

@@ -123,8 +123,8 @@ MonoBehaviour:
   lifeManager: {fileID: 0}
   projectile: {fileID: 2482811248068315332, guid: 70738ed9358fc2841b22000a79c32f4c,
     type: 3}
-  attackTimer: 4
-  projectilesPerAttack: 8
+  attackTimer: 1
+  projectilesPerAttack: 9
   maxAttacks: 15
   framesBetweenShots: 4
   projectileSpeed: 5
@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ed3501aae9697637992441e17349ec8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vida: 3
+  vida: 1
 --- !u!50 &8425082354699842405
 Rigidbody2D:
   serializedVersion: 4
@@ -202,6 +202,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canEnter: 0
   cameraSpeed: 5
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 8192
 --- !u!114 &8425082354699842407
 MonoBehaviour:
   m_ObjectHideFlags: 0

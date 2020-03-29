@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 5281232}
   - component: {fileID: 5281233}
   - component: {fileID: 5281234}
+  - component: {fileID: 5281235}
   m_Layer: 0
   m_Name: Child's Bedroom Light
   m_TagString: Untagged
@@ -206,6 +207,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f18ab008982c864ab091521c7671006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &5281235
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5281231}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &18793250
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +313,7 @@ GameObject:
   m_Component:
   - component: {fileID: 105958407}
   - component: {fileID: 105958408}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Downstairs Corridor Right Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -583,7 +610,7 @@ GameObject:
   m_Component:
   - component: {fileID: 189297814}
   - component: {fileID: 189297815}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Downstairs Corridor Left Elevator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -640,7 +667,7 @@ GameObject:
   m_Component:
   - component: {fileID: 195589072}
   - component: {fileID: 195589073}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Living Room Right Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -986,7 +1013,7 @@ GameObject:
   - component: {fileID: 405556816}
   - component: {fileID: 405556815}
   - component: {fileID: 405556819}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Player Collisions
   m_TagString: Walls
   m_Icon: {fileID: 0}
@@ -5121,7 +5148,7 @@ GameObject:
   m_Component:
   - component: {fileID: 501600385}
   - component: {fileID: 501600384}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Parent's Bedroom Left Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5272,7 +5299,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &510976475
 MonoBehaviour:
@@ -5358,6 +5385,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canEnter: 0
   cameraSpeed: 100
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 8192
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -5601,6 +5631,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canEnter: 0
   cameraSpeed: 100
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 8192
 --- !u!114 &540419398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5752,7 +5785,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &556127147
 GameObject:
@@ -5950,9 +5983,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   priest: {fileID: 8425082354699842398, guid: 8a6f3606837dd8a4d9c2566bd29dcf1d, type: 3}
+  bishop: {fileID: 4395491056980146611, guid: aaa8b78940f2a0444a4f14111db0efcf, type: 3}
+  monk: {fileID: 2482811248068315332, guid: 70738ed9358fc2841b22000a79c32f4c, type: 3}
   numPriests: 50
+  numBishops: 50
+  numMonks: 50
   timeBetweenSpawns: 15
-  framesBetweenSpawns: 3
+  framesBetweenSpawns: 30
 --- !u!4 &589443119
 Transform:
   m_ObjectHideFlags: 0
@@ -5965,7 +6002,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &610315158
 GameObject:
@@ -5978,6 +6015,7 @@ GameObject:
   - component: {fileID: 610315159}
   - component: {fileID: 610315160}
   - component: {fileID: 610315161}
+  - component: {fileID: 610315162}
   m_Layer: 0
   m_Name: Upstairs Corridor Light
   m_TagString: Untagged
@@ -6052,6 +6090,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f18ab008982c864ab091521c7671006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &610315162
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 610315158}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &634926988
 GameObject:
   m_ObjectHideFlags: 0
@@ -6062,7 +6126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 634926989}
   - component: {fileID: 634926990}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Living Room Bedroom Right Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6249,7 +6313,7 @@ GameObject:
   m_Component:
   - component: {fileID: 672176910}
   - component: {fileID: 672176911}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Upstairs Corridor Right Elevator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6306,7 +6370,6 @@ GameObject:
   m_Component:
   - component: {fileID: 720278235}
   - component: {fileID: 720278236}
-  - component: {fileID: 720278237}
   m_Layer: 0
   m_Name: Main Light
   m_TagString: Untagged
@@ -6369,18 +6432,6 @@ MonoBehaviour:
   - {x: 61, y: -34, z: 0}
   - {x: 61, y: 5, z: 0}
   - {x: -62, y: 5, z: 0}
---- !u!114 &720278237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 720278234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f18ab008982c864ab091521c7671006, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &730430814
 GameObject:
   m_ObjectHideFlags: 0
@@ -6391,7 +6442,7 @@ GameObject:
   m_Component:
   - component: {fileID: 730430816}
   - component: {fileID: 730430815}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Child's Bedroom Right Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6823,7 +6874,7 @@ GameObject:
   m_Component:
   - component: {fileID: 854713639}
   - component: {fileID: 854713638}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Upstairs Corridor Right Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9016,6 +9067,7 @@ GameObject:
   - component: {fileID: 983668436}
   - component: {fileID: 983668437}
   - component: {fileID: 983668438}
+  - component: {fileID: 983668439}
   m_Layer: 0
   m_Name: Parents' Bedroom Light
   m_TagString: Untagged
@@ -9090,26 +9142,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f18ab008982c864ab091521c7671006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1031455963 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2413950573502847834, guid: 8f51b634d0979eb4181ffda79a7b889c,
-    type: 3}
-  m_PrefabInstance: {fileID: 2413950574384258945}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1031455964
-MonoBehaviour:
+--- !u!61 &983668439
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1031455963}
+  m_GameObject: {fileID: 983668435}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5d1e25441910544e947694bbe81651b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canEnter: 0
-  cameraSpeed: 100
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1098204184
 GameObject:
   m_ObjectHideFlags: 0
@@ -9184,6 +9242,75 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!1001 &1116135386
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7643158296450933844, guid: a8efc16cbc739334991a7eca6b1b9ddb,
+        type: 3}
+      propertyPath: m_Name
+      value: Score Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643158296450933850, guid: a8efc16cbc739334991a7eca6b1b9ddb,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643158296450933850, guid: a8efc16cbc739334991a7eca6b1b9ddb,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643158296450933850, guid: a8efc16cbc739334991a7eca6b1b9ddb,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643158296450933850, guid: a8efc16cbc739334991a7eca6b1b9ddb,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643158296450933850, guid: a8efc16cbc739334991a7eca6b1b9ddb,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643158296450933850, guid: a8efc16cbc739334991a7eca6b1b9ddb,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643158296450933850, guid: a8efc16cbc739334991a7eca6b1b9ddb,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643158296450933850, guid: a8efc16cbc739334991a7eca6b1b9ddb,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643158296450933850, guid: a8efc16cbc739334991a7eca6b1b9ddb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643158296450933850, guid: a8efc16cbc739334991a7eca6b1b9ddb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643158296450933850, guid: a8efc16cbc739334991a7eca6b1b9ddb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a8efc16cbc739334991a7eca6b1b9ddb, type: 3}
 --- !u!1 &1121465522
 GameObject:
   m_ObjectHideFlags: 0
@@ -19153,7 +19280,7 @@ Transform:
   - {fileID: 189297814}
   - {fileID: 1204059513}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1123756634
 GameObject:
@@ -19276,6 +19403,7 @@ GameObject:
   - component: {fileID: 1150397733}
   - component: {fileID: 1150397734}
   - component: {fileID: 1150397735}
+  - component: {fileID: 1150397736}
   m_Layer: 0
   m_Name: Kitchen Light
   m_TagString: Untagged
@@ -19350,6 +19478,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f18ab008982c864ab091521c7671006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &1150397736
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150397732}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1160587165
 GameObject:
   m_ObjectHideFlags: 0
@@ -19594,7 +19748,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1204059513}
   - component: {fileID: 1204059514}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Downstairs Corridor Right Elevator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19792,7 +19946,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1498059128}
   - component: {fileID: 1498059127}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Upstairs Corridor Left Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19849,7 +20003,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1516025768}
   - component: {fileID: 1516025769}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Upstairs Corridor Left Elevator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19923,7 +20077,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 29918a864a0ef4b4e969d5f352ac10a1, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 421abe8e75e239f49b1730a7386016d0, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -20021,7 +20175,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1591811272
 GameObject:
@@ -20321,7 +20475,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1651859340}
   - component: {fileID: 1651859341}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Kitchen Left Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20549,6 +20703,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canEnter: 0
   cameraSpeed: 100
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 8192
 --- !u!114 &1749825518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20700,7 +20857,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1956846571
 GameObject:
@@ -20783,6 +20940,7 @@ GameObject:
   - component: {fileID: 2008221919}
   - component: {fileID: 2008221920}
   - component: {fileID: 2008221921}
+  - component: {fileID: 2008221922}
   m_Layer: 0
   m_Name: Living Room Light
   m_TagString: Untagged
@@ -20857,6 +21015,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f18ab008982c864ab091521c7671006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &2008221922
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008221918}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &2064863977
 GameObject:
   m_ObjectHideFlags: 0
@@ -20867,7 +21051,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2064863978}
   - component: {fileID: 2064863979}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Downstairs Corridor Left Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20939,12 +21123,12 @@ PrefabInstance:
     - target: {fileID: 2413950573502847839, guid: 8f51b634d0979eb4181ffda79a7b889c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2413950573502847839, guid: 8f51b634d0979eb4181ffda79a7b889c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2413950573502847839, guid: 8f51b634d0979eb4181ffda79a7b889c,
         type: 3}

@@ -7,7 +7,12 @@ public class Enemy : MonoBehaviour
     protected GameObject player;//precisa ser inicializado no start do filho
     protected bool attackMode;
 
-    virtual public void AttackMove(float a)
+    public virtual void AttackMove(float a, Vector3 toWhere)
+    {
+
+    }
+
+    public virtual void Die()
     {
 
     }

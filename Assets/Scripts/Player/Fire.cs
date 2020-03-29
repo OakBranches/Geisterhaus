@@ -9,6 +9,7 @@ public class Fire : MonoBehaviour
     public Queue<Projectiles.Projectile> projectilePool =
         new Queue<Projectiles.Projectile>();
 
+    Animator animator;
     public GameObject projectile;
     public int numProjectiles = 5;
     public float projectileSpeed = 1f;
@@ -21,6 +22,7 @@ public class Fire : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         rechargeLight = GetComponentInChildren<Light2D>();
         intensity = rechargeLight.intensity;
         rechargeLight.enabled = false;
@@ -34,6 +36,8 @@ public class Fire : MonoBehaviour
             projectilePool.Enqueue(projectileCopy);
             projectileCopy.instance.SetActive(false);
         }
+
+        animator.SetBool("fire", false);
     }
 
     // Update is called once per frame
@@ -52,8 +56,14 @@ public class Fire : MonoBehaviour
             projectile.rb.velocity =
                 new Vector3(projectileSpeed * transform.localScale.x, 0f, 0f);
             lastProjectileTimer = projectileTimer;
+            animator.SetBool("fire", true);
             StartCoroutine(RechargeLight());
         }
+    }
+
+    public void ResetAnimation()
+    {
+        animator.SetBool("fire", false);
     }
 
     IEnumerator RechargeLight()

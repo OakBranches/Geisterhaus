@@ -23,9 +23,9 @@ TagManager:
   - Enemies
   - Player
   - NPC
-  - 
-  - 
-  - 
+  - Doors
+  - Collisions
+  - Laser
   - 
   - 
   - 

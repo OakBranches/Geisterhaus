@@ -9,13 +9,12 @@ public class RoomDriver : MonoBehaviour
 
     Camera mainCamera;
     [SerializeField] float cameraSpeed = 1f;
+    [SerializeField] LayerMask collisionMask;
 
     // Start is called before the first frame update
     void Start()
-    {
-        
+    {    
         mainCamera = Camera.main;
-
     }
 
     // Update is called once per frame
@@ -27,7 +26,18 @@ public class RoomDriver : MonoBehaviour
             else
                 canEnter = false;
 		}
+
+        if (canEnter)
+        {
+            Collider2D hit;
+            hit = Physics2D.OverlapCircle(transform.position, 0.2f, collisionMask);
+            if (hit)
+            {
+                OnTriggerStay2D(hit);
+            }
+        }
     }
+
     public void OnTriggerStay2D(Collider2D collider)
     {
         UpstairsCorridorLeftDoor(collider);

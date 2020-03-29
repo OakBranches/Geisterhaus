@@ -73,8 +73,6 @@ public class MainMenu : MonoBehaviour
             .BinarySearch(screens, currentScreen);
         PairInt limit;
 
-        Debug.Log(currentScreen + " " + oldScreen + " " + index);
-
         if (limitsIndex >= 0 && limits.Length > 0)
         {
             limit = limits[limitsIndex];
