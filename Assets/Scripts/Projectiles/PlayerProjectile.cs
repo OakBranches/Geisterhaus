@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerProjectile : MonoBehaviour
 {
-    public static Fire fire;
     public static Collider2D playerCollider;
 	public float dano;
     Collider2D projectileCollider;
@@ -16,15 +15,10 @@ public class PlayerProjectile : MonoBehaviour
         score = FindObjectOfType<ScoreManager>();
         projectileCollider = GetComponent<Collider2D>();
 
-        if (fire == null)
-        {
-            fire = GameObject.FindGameObjectWithTag("Player")
-                .GetComponent<Fire>();
-        }
-
         if (playerCollider == null)
         {
-            playerCollider = fire.GetComponent<Collider2D>();
+            playerCollider = GameObject.FindGameObjectWithTag("Player")
+                .GetComponent<Collider2D>();
         }
 
         rb = GetComponent<Rigidbody2D>();
@@ -37,7 +31,7 @@ public class PlayerProjectile : MonoBehaviour
         {
             gameObject.SetActive(false);
             Projectiles.Projectile projectile = new Projectiles.Projectile(rb, gameObject);
-            fire.projectilePool.Enqueue(projectile);
+            Fire.projectilePool.Enqueue(projectile);
 			if (other.gameObject.layer == LayerMask.NameToLayer("Enemies"))
             {
 				if (other.gameObject.GetComponent<LifeManager>().subLife(dano))

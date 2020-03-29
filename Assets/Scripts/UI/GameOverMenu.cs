@@ -26,8 +26,10 @@ public class GameOverMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Fire.projectilePool = new Queue<Projectiles.Projectile>();
         Priest.projectilePool = new Queue<Projectiles.Projectile>();
         Bishop.laserPool = new Queue<Projectiles.Projectile>();
+        Monk.shieldPool = new Queue<Projectiles.Projectile>();
 
         List<string> screensList = new List<string>();
         

@@ -6,7 +6,7 @@ using UnityEngine.Experimental.Rendering.Universal;
 [RequireComponent(typeof(Light2D))]
 public class Fire : MonoBehaviour
 {
-    public Queue<Projectiles.Projectile> projectilePool =
+    public static Queue<Projectiles.Projectile> projectilePool =
         new Queue<Projectiles.Projectile>();
 
     Animator animator;
