@@ -14,16 +14,17 @@ public class SaveSystem
 
         List<HighScoreAndName> highScoresList = new List<HighScoreAndName>();
 
-        for (int i = 0; i < HighScoreDisplay.highScores.Length; i++)
-        {
-            highScoresList.Add(HighScoreDisplay.highScores[i]);
-        }
+        if (HighScoreDisplay.highScores != null)
+            for (int i = 0; i < HighScoreDisplay.highScores.Length; i++)
+            {
+                highScoresList.Add(HighScoreDisplay.highScores[i]);
+            }
 
         while (highScoresList.Count < 10)
         {
             highScoresList.Add(new HighScoreAndName(0, "N/A"));
         }
-
+        HighScoreDisplay.highScores = highScoresList.ToArray();
         ScoreData data = new ScoreData();
 
         formatter.Serialize(stream, data);

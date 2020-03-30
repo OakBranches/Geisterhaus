@@ -61,7 +61,7 @@ public class EnemySpawner : MonoBehaviour
             monkCopy.instance.SetActive(false);
         }
 
-        StartCoroutine(SpawnEnemies(5));
+        StartCoroutine(SpawnEnemies(2));
     }
 
     // Update is called once per frame
