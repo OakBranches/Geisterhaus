@@ -5,9 +5,11 @@ using UnityEngine;
 public class PlayerProjectile : MonoBehaviour
 {
     public static Collider2D playerCollider;
-	public float dano;
+	public float dano, chanceDeDropar = 0.75f;
     Collider2D projectileCollider;
     Rigidbody2D rb;
+    public GameObject dropSpeed;
+    public GameObject dropCooldown;
     ScoreManager score;
 
     void Start()
@@ -29,17 +31,28 @@ public class PlayerProjectile : MonoBehaviour
         if (other.transform.tag == "Walls" || 
             other.gameObject.layer == LayerMask.NameToLayer("Enemies"))
         {
-            gameObject.SetActive(false);
-            Projectiles.Projectile projectile = new Projectiles.Projectile(rb, gameObject);
-            Fire.projectilePool.Enqueue(projectile);
 			if (other.gameObject.layer == LayerMask.NameToLayer("Enemies"))
             {
 				if (other.gameObject.GetComponent<LifeManager>().subLife(dano))
 				{
+                    bool rand = Random.Range(0f, 1f) <= chanceDeDropar; 
+                    if (rand)
+                    {
+                        float whichPowerup = Random.Range(0f, 2f);
+                        if (whichPowerup <= 1f)
+                            Instantiate(dropSpeed,
+                                other.gameObject.transform.position, Quaternion.identity);
+                        else
+                            Instantiate(dropCooldown,
+                                other.gameObject.transform.position, Quaternion.identity);
+                    }
                     score.AddScore(100);
                     other.gameObject.GetComponent<Enemy>().Die();
                 }
             }
+            gameObject.SetActive(false);
+            Projectiles.Projectile projectile = new Projectiles.Projectile(rb, gameObject);
+            Fire.projectilePool.Enqueue(projectile);
         }   
     }
 }

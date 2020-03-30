@@ -6,7 +6,7 @@ using HighScoreAndNameStruct;
 
 public class SaveSystem
 {
-    public static void SaveScore(HighScoreDisplay highScores)
+    public static void SaveScore()
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Path.Combine(Application.persistentDataPath, "SaveData.bin");
@@ -14,9 +14,9 @@ public class SaveSystem
 
         List<HighScoreAndName> highScoresList = new List<HighScoreAndName>();
 
-        for (int i = 0; i < highScores.highScores.Length; i++)
+        for (int i = 0; i < HighScoreDisplay.highScores.Length; i++)
         {
-            highScoresList.Add(highScores.highScores[i]);
+            highScoresList.Add(HighScoreDisplay.highScores[i]);
         }
 
         while (highScoresList.Count < 10)
@@ -24,27 +24,26 @@ public class SaveSystem
             highScoresList.Add(new HighScoreAndName(0, "N/A"));
         }
 
-        highScores = new HighScoreDisplay(highScoresList.ToArray());
-
-        ScoreData data = new ScoreData(highScores);
+        ScoreData data = new ScoreData();
 
         formatter.Serialize(stream, data);
         stream.Close();
     }
 
-    public static ScoreData LoadScore(HighScoreDisplay highScores)
+    public static ScoreData LoadScore()
     {
         string path = Path.Combine(Application.persistentDataPath, "SaveData.bin");
 
         if (!File.Exists(path))
         {
-            SaveScore(highScores);
+            SaveScore();
         }
 
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Open);
 
         ScoreData data = formatter.Deserialize(stream) as ScoreData;
+        data.ToString();
         stream.Close();
 
         return data;

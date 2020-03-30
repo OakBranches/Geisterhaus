@@ -15,6 +15,7 @@ public class EnemySpawner : MonoBehaviour
     public int numMonks = 50;
     
     public float timeBetweenSpawns = 5f;
+    float fixedTimeBetweenSpawns;
     float timeSinceLastSpawn;
 
     int wavesSpawned = 0;
@@ -23,6 +24,7 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        fixedTimeBetweenSpawns = timeBetweenSpawns;
         ScoreManager.startedPlaying = true;
         timeSinceLastSpawn = timeBetweenSpawns;
         priestPool = new Queue<Projectiles.Projectile>();
@@ -58,6 +60,8 @@ public class EnemySpawner : MonoBehaviour
             monkPool.Enqueue(monkCopy);
             monkCopy.instance.SetActive(false);
         }
+
+        StartCoroutine(SpawnEnemies(5));
     }
 
     // Update is called once per frame
@@ -80,7 +84,7 @@ public class EnemySpawner : MonoBehaviour
     int EnemiesPerWave()
     {
         // f(x) = a * x + b
-        int num = (int) (wavesSpawned/5f) + 1;
+        int num = (int) (wavesSpawned/10f) + 1;
         return num;
     }
 
@@ -88,19 +92,52 @@ public class EnemySpawner : MonoBehaviour
     {
         for (int i = 0; i < numEnemies; i++)
         {
-            float whichEnemy = Random.Range(0f, 2f);
             Projectiles.Projectile enemyCopy;
-            if (0f <= whichEnemy && whichEnemy < 1f) 
+            if (wavesSpawned < 10)
             {
                 enemyCopy = priestPool.Dequeue();
             }
-            else if (1f <= whichEnemy && whichEnemy <= 2f)
+            else if (wavesSpawned < 20)
             {
-                enemyCopy = bishopPool.Dequeue();
+                if (i == 0)
+                {
+                    enemyCopy = priestPool.Dequeue();
+                }
+                else
+                {
+                    float whichEnemy = Random.Range(0f, 2f);
+                    if (whichEnemy < 1f)
+                    {
+                        enemyCopy = priestPool.Dequeue();
+                    }
+                    else
+                    {
+                        enemyCopy = bishopPool.Dequeue();
+                    }
+                }
             }
             else
             {
-                enemyCopy = monkPool.Dequeue();
+                if (i == 0)
+                {
+                    enemyCopy = monkPool.Dequeue();
+                }
+                else
+                {
+                    float whichEnemy = Random.Range(0f, 3f);
+                    if (whichEnemy < 1f) 
+                    {
+                        enemyCopy = priestPool.Dequeue();
+                    }
+                    else if (whichEnemy < 2f) 
+                    {
+                        enemyCopy = bishopPool.Dequeue();
+                    }
+                    else
+                    {
+                        enemyCopy = monkPool.Dequeue();
+                    }
+                }
             }
             enemyCopy.instance.SetActive(true);
             
@@ -116,6 +153,6 @@ public class EnemySpawner : MonoBehaviour
     float CalculateTimeBetweenSpawns()
     {
         // f(x) = a * x + b
-        return (float) timeBetweenSpawns + wavesSpawned / 5f;
+        return (float) fixedTimeBetweenSpawns + wavesSpawned / 5f;
     }
 }

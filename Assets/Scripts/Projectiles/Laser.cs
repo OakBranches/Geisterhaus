@@ -8,6 +8,7 @@ public class Laser : MonoBehaviour
     Collider2D projectileCollider;
     Rigidbody2D rb;
     public float dano = 10f;
+    bool doDamage = false;
 
     void Start()
     {   
@@ -21,9 +22,9 @@ public class Laser : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void Update()
     {
-        if (other.transform.tag == "Player")
+        if (doDamage)
         {
             if(player.lifeManager.subLife(dano * Time.fixedDeltaTime))
             {
@@ -33,8 +34,19 @@ public class Laser : MonoBehaviour
         }
     }
 
-    void OnTriggerStay2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        OnTriggerEnter2D(other);    
+        if (other.transform.tag == "Player")
+        {
+            doDamage = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.transform.tag == "Player")
+        {
+            doDamage = false;
+        }
     }
 }

@@ -7,7 +7,7 @@ public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager self;
     private static int score;
-    private string name = "N/A";
+    private static string name = "N/A";
     public static bool startedPlaying = false;
     private float startTime = 0f;
 
@@ -68,7 +68,6 @@ public class ScoreManager : MonoBehaviour
             {
                 AddScore(1);
                 startTime = Time.time;
-                Debug.Log(score);
             }
             yield return null;
         }

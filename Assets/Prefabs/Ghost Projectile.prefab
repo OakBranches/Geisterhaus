@@ -4900,6 +4900,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dano: 1
+  chanceDeDropar: 0.25
+  dropSpeed: {fileID: 3403422636586700646, guid: 74413ad26a58bbb4581fb2cf5ad72cd0,
+    type: 3}
+  dropCooldown: {fileID: 4614852586062797280, guid: cc34ee8824424a63694c1cb1c743c871,
+    type: 3}
 --- !u!1 &6875664020790793105
 GameObject:
   m_ObjectHideFlags: 0

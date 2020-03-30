@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.SceneManagement;
+
 public class Animacao : MonoBehaviour
 {
     public GameObject pai,mae,filho,ghost,scene,priest;
@@ -16,11 +18,14 @@ public class Animacao : MonoBehaviour
     // mae sai
         
         mae.SetActive(true);
-        mae.GetComponent<Animator>().Play("sequisabe");
+        mae.GetComponent<Animator>().Play("sequisabe",4,0.5f);
+  
+      
     }
     void SaiCrianca(){
         filho.SetActive(true);
-        filho.GetComponent<Animator>().Play("boy");
+        filho.GetComponent<Animator>().Play("boy",4,0.5f);
+        
     }
     void Fantasma(){
         ghost.SetActive(true);
@@ -54,5 +59,14 @@ public class Animacao : MonoBehaviour
     void CloseM(){
         mae.GetComponent<Animator>().SetBool("fan", true);
         camera.GetComponent<Animator>().SetBool("fan", true);
+    }
+    void ChangeScene(){
+        SceneManager.LoadScene("Game");
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown("space"))
+            ChangeScene();
     }
 }

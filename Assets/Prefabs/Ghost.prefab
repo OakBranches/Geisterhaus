@@ -183,6 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vida: 5
+  slider: {fileID: 0}
 --- !u!114 &6927736634964388309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,7 +200,7 @@ MonoBehaviour:
     type: 3}
   numProjectiles: 3
   projectileSpeed: 10
-  projectileTimer: 5
+  projectileTimer: 2.5
 --- !u!114 &7686369482681143435
 MonoBehaviour:
   m_ObjectHideFlags: 0

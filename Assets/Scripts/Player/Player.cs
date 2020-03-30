@@ -48,6 +48,4 @@ public class Player : MonoBehaviour
         newScale.x = -newScale.x;
         transform.localScale = newScale;
     }
-
-
 }

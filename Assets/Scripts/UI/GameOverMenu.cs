@@ -12,16 +12,22 @@ public class GameOverMenu : MonoBehaviour
     [SerializeField] string menuUIName = "Menu UI";
     GameObject menuUI;
 
+    public InputField inputField;
+
     string currentScreen;
     string oldScreen;
     string[] screens;
 
     public PairInt[] limits;
-
+    
     int index;
 
     Dictionary<string, Transform> screenDictionary =
         new Dictionary<string, Transform>();
+
+    bool canMove = false;
+
+    ScoreManager score;
 
     // Start is called before the first frame update
     void Start()
@@ -55,21 +61,31 @@ public class GameOverMenu : MonoBehaviour
         screens = screensList.ToArray();
         System.Array.Sort(screens);
 
+        score = FindObjectOfType<ScoreManager>();
         ResetUI(currentScreen);
+        arrow.transform.position = 
+            new Vector3(arrow.transform.position.x,
+            screenDictionary[currentScreen].GetChild(0)
+            .transform.position.y,
+            transform.position.z);
+        inputField.Select();
     }
 
     // Update is called once per frame
     void Update()
     {
-        SetArrowPosition();
-        oldScreen = currentScreen;
-
-        if (oldScreen != currentScreen)
+        if (canMove)
         {
-            ResetUI(currentScreen);
-        }
+            SetArrowPosition();
+            oldScreen = currentScreen;
 
-        DetectEnterInput();
+            if (oldScreen != currentScreen)
+            {
+                ResetUI(currentScreen);
+            }
+
+            DetectEnterInput();
+        }
     }
 
     void SetArrowPosition()
@@ -127,6 +143,27 @@ public class GameOverMenu : MonoBehaviour
         }
     }
 
+    public void OnEndInput()
+    {
+        if (inputField.text.Length == 3)
+        {
+            StartCoroutine(CanMove());
+        }
+        else
+        {
+            inputField.Select();
+        }
+    }
+
+    IEnumerator CanMove()
+    {
+        yield return null;
+        canMove = true;
+        score.SetName(inputField.text);
+        UnityEngine.EventSystems.
+            EventSystem.current.SetSelectedGameObject(null);
+    }
+
     [System.Serializable]
     public struct PairInt
     {
@@ -155,13 +192,13 @@ public class GameOverMenu : MonoBehaviour
 
         switch (index)
         {
-            case 0:
+            case 1:
                 SceneManager.LoadScene("Main Menu");
                 break;
-            case 1:
+            case 2:
                 SceneManager.LoadScene("Game");
                 break;
-            case 2:
+            case 3:
                 Application.Quit();
                 break;
             default:

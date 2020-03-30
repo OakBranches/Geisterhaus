@@ -8,8 +8,9 @@ using UnityEngine.SceneManagement;
 public class HighScoreDisplay : MonoBehaviour
 {
     ScoreManager score;
-    public HighScoreAndName[] highScores = null;
+    public static HighScoreAndName[] highScores = null;
     Text[] scoreText = null;
+    bool loaded = false;
 
     public HighScoreDisplay(HighScoreAndName[] scoreAndName)
     {
@@ -23,6 +24,7 @@ public class HighScoreDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        loaded = false;
         scoreText = gameObject.GetComponentsInChildren<Text>();
         score = FindObjectOfType<ScoreManager>();
         print(Application.persistentDataPath);
@@ -31,15 +33,16 @@ public class HighScoreDisplay : MonoBehaviour
 
     void Update()
     {
-        if (SceneManager.GetActiveScene().name == "Main Menu")
+        if (SceneManager.GetActiveScene().name == "Main Menu" && !loaded)
         {
+            loaded = true;
             UpdateDisplay();
         }    
     }
 
     public void UpdateDisplay()
     {
-        ScoreData data = SaveSystem.LoadScore(this);
+        ScoreData data = SaveSystem.LoadScore();
         highScores = new HighScoreAndName[10];
 
         for (int i = 0; i < 10; i++)
@@ -53,7 +56,13 @@ public class HighScoreDisplay : MonoBehaviour
     {
         int aux = score.GetScore();
         string auxName = score.GetName();
-        HighScoreAndName[] auxArray = GetHighScoresAndNames();
+        HighScoreAndName[] auxArray = new HighScoreAndName[10];
+        ScoreData data = SaveSystem.LoadScore();
+        for (int i = 0; i < 10; i++)
+        {
+            auxArray[i] = data.scoreAndName[i];
+            scoreText[i].text = i + 1 + ". " + auxArray[i].name + " " + auxArray[i].score.ToString();
+        }
         List<HighScoreAndName> list = new List<HighScoreAndName>(auxArray);
         list.Add(new HighScoreAndName(aux, auxName));
         list.Sort((x,y) => x.score.CompareTo(y.score));
@@ -61,11 +70,11 @@ public class HighScoreDisplay : MonoBehaviour
         if (list.Count == 11)
         {
             print(11);
-            list.Remove(list[11]);
+            list.Remove(list[10]);
         }
         highScores = list.ToArray();
 
-        SaveSystem.SaveScore(this);
+        SaveSystem.SaveScore();
     }
 
     public HighScoreAndName[] GetHighScoresAndNames()

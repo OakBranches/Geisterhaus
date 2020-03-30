@@ -8,6 +8,7 @@ public class Shield : MonoBehaviour
     Collider2D projectileCollider;
     Rigidbody2D rb;
     public float dano = 10f;
+    bool doDamage = false;
 
     void Start()
     {   
@@ -19,6 +20,25 @@ public class Shield : MonoBehaviour
         }
 
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    void Update()
+    {
+        if (doDamage)
+        {
+            if(player.lifeManager.subLife(dano * Time.fixedDeltaTime))
+            {
+                // Fim de jogo
+                GameController.GameOver();
+            }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other) {
+        if (other.transform.tag == "Player")
+        {
+            doDamage = false;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -35,16 +55,7 @@ public class Shield : MonoBehaviour
         }
         else if (other.transform.tag == "Player")
         {
-            if(player.lifeManager.subLife(dano * Time.fixedDeltaTime))
-            {
-                // Fim de jogo
-                GameController.GameOver();
-            }
+            doDamage = true;
         }
-    }
-
-    void OnTriggerStay2D(Collider2D other)
-    {
-        OnTriggerEnter2D(other);    
     }
 }
