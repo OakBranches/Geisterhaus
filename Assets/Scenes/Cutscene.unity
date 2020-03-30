@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 124210447}
   - component: {fileID: 124210446}
   - component: {fileID: 124210445}
+  - component: {fileID: 124210448}
   m_Layer: 0
   m_Name: priest_idle
   m_TagString: Untagged
@@ -222,6 +223,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &124210448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 124210444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc0656e3201e3fdcfbc7907b4403562a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pai: {fileID: 346282531}
+  mae: {fileID: 1782017459}
+  filho: {fileID: 1205600963}
+  ghost: {fileID: 8582649061963632570}
+  scene: {fileID: 249450962}
+  priest: {fileID: 124210444}
+  camera: {fileID: 2044342052}
 --- !u!1 &232102704
 GameObject:
   m_ObjectHideFlags: 0
@@ -10262,7 +10282,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 249450962}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a9bd5c2898c0332ba20c54615eabd07, type: 3}
+  m_Script: {fileID: 11500000, guid: dc0656e3201e3fdcfbc7907b4403562a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pai: {fileID: 346282531}
@@ -10316,7 +10336,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 346282531}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a9bd5c2898c0332ba20c54615eabd07, type: 3}
+  m_Script: {fileID: 11500000, guid: dc0656e3201e3fdcfbc7907b4403562a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pai: {fileID: 346282531}
@@ -16811,7 +16831,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1205600963}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a9bd5c2898c0332ba20c54615eabd07, type: 3}
+  m_Script: {fileID: 11500000, guid: dc0656e3201e3fdcfbc7907b4403562a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pai: {fileID: 346282531}
@@ -17042,8 +17062,8 @@ GameObject:
   - component: {fileID: 1782017466}
   - component: {fileID: 1782017465}
   - component: {fileID: 1782017464}
-  - component: {fileID: 1782017461}
   - component: {fileID: 1782017463}
+  - component: {fileID: 1782017462}
   m_Layer: 12
   m_Name: Mother
   m_TagString: Untagged
@@ -17065,7 +17085,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1782017461
+--- !u!114 &1782017462
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17074,7 +17094,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1782017459}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a9bd5c2898c0332ba20c54615eabd07, type: 3}
+  m_Script: {fileID: 11500000, guid: dc0656e3201e3fdcfbc7907b4403562a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pai: {fileID: 346282531}
@@ -17376,8 +17396,8 @@ GameObject:
   - component: {fileID: 2044342052}
   - component: {fileID: 2044342051}
   - component: {fileID: 2044342050}
-  - component: {fileID: 2044342055}
   - component: {fileID: 2044342054}
+  - component: {fileID: 2044342055}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -17451,7 +17471,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5.101904
+  orthographic size: 9.443936
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -17509,7 +17529,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2044342049}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a9bd5c2898c0332ba20c54615eabd07, type: 3}
+  m_Script: {fileID: 11500000, guid: dc0656e3201e3fdcfbc7907b4403562a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pai: {fileID: 346282531}
@@ -17517,7 +17537,7 @@ MonoBehaviour:
   filho: {fileID: 1205600963}
   ghost: {fileID: 8582649061963632570}
   scene: {fileID: 249450962}
-  priest: {fileID: 0}
+  priest: {fileID: 124210444}
   camera: {fileID: 2044342052}
 --- !u!1 &2115258165
 GameObject:
@@ -17708,7 +17728,7 @@ GameObject:
   - component: {fileID: 8582649061963632573}
   - component: {fileID: 7697469310663229403}
   - component: {fileID: 1099426546666836494}
-  - component: {fileID: 8582649061963632571}
+  - component: {fileID: 8582649061963632574}
   m_Layer: 11
   m_Name: Ghost
   m_TagString: Player
@@ -17716,25 +17736,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &8582649061963632571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8582649061963632570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a9bd5c2898c0332ba20c54615eabd07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pai: {fileID: 346282531}
-  mae: {fileID: 1782017459}
-  filho: {fileID: 1205600963}
-  ghost: {fileID: 8582649061963632570}
-  scene: {fileID: 249450962}
-  priest: {fileID: 124210444}
-  camera: {fileID: 2044342052}
 --- !u!212 &8582649061963632572
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -17805,6 +17806,25 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8582649061963632574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8582649061963632570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc0656e3201e3fdcfbc7907b4403562a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pai: {fileID: 346282531}
+  mae: {fileID: 1782017459}
+  filho: {fileID: 1205600963}
+  ghost: {fileID: 8582649061963632570}
+  scene: {fileID: 249450962}
+  priest: {fileID: 124210444}
+  camera: {fileID: 2044342052}
 --- !u!4 &8582649061963632575
 Transform:
   m_ObjectHideFlags: 0

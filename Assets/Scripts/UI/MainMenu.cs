@@ -157,7 +157,7 @@ public class MainMenu : MonoBehaviour
         switch (index)
         {
             case 1:
-                SceneManager.LoadScene("Game");
+                SceneManager.LoadScene("Cutscene");
                 break;
             case 2:
                 currentScreen = "Tutorial";
