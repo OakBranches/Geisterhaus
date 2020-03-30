@@ -143,7 +143,9 @@ public class MainMenu : MonoBehaviour
             {
                 MenuOptions(index);
             }
-            else if (currentScreen == "High Scores")
+            else if (currentScreen == "High Scores" ||
+                currentScreen == "Credits" ||
+                currentScreen == "Tutorial")
             {
                 currentScreen = "Menu UI";
             }
@@ -155,15 +157,18 @@ public class MainMenu : MonoBehaviour
         switch (index)
         {
             case 1:
-                SceneManager.LoadScene("Game");
+                SceneManager.LoadScene("Cutscene");
                 break;
             case 2:
-                Debug.Log("Implementa o tutorial ae");
+                currentScreen = "Tutorial";
                 break;
             case 3:
                 currentScreen = "High Scores";
                 break;
             case 4:
+                currentScreen = "Credits";
+                break;
+            case 5:
                 Debug.Log("Exit");
                 Application.Quit();
                 break;
