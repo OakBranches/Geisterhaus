@@ -18,23 +18,23 @@ public class Animacao : MonoBehaviour
     // mae sai
         
         mae.SetActive(true);
-        mae.GetComponent<Animator>().Play("sequisabe",4,0.5f);
+        mae.GetComponent<Animator>().Play("sequisabe");
   
       
     }
     void SaiCrianca(){
         filho.SetActive(true);
-        filho.GetComponent<Animator>().Play("boy",4,0.5f);
+        filho.GetComponent<Animator>().Play("boy");
         
     }
     void Fantasma(){
         ghost.SetActive(true);
-        ghost.GetComponent<Animator>().Play("ghost",4,1f);
+        ghost.GetComponent<Animator>().Play("ghost");
     }
     void SaiPai(){
     //o pai sai do carro
         pai.SetActive(true);
-        pai.GetComponent<Animator>().Play("father",4,0.5f);
+        pai.GetComponent<Animator>().Play("father");
     }
     void Entrar(){
         scene.SetActive(false);
